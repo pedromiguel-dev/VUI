@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="vui">
+	<schema id="io.github.pedromigueldev.vui" path="/io/github/pedromigueldev/vui/">
+	</schema>
+</schemalist>
