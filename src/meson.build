@@ -22,7 +22,6 @@ vui_sources = [
 
 vui_deps = [
   dependency('gtk4'),
-  dependency('libvui'),
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
