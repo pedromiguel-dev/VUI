@@ -6,6 +6,7 @@ project('vui', ['c', 'vala'],
 
 i18n = import('i18n')
 gnome = import('gnome')
+pkgconfig = import('pkgconfig')
 
 subdir('src')
 

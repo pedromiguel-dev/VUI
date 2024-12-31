@@ -22,6 +22,7 @@ vui_sources = [
 
 vui_deps = [
   dependency('gtk4'),
+  dependency('libvui'),
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
@@ -42,4 +43,10 @@ libvui = shared_library(
 	],
 	install: true,
 	install_dir: [true, true, true]
+)
+
+pkgconfig.generate(libvui,
+  description: 'A vala UI framework.',
+  name: 'libvui',
+  requires: [ vui_deps ],
 )
