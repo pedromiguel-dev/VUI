@@ -20,12 +20,6 @@ vui_sources = [
   'Adwaita' / 'Widgets' / 'Window.vala',
 ]
 
-vui_sources += [
-  'main.vala',
-  'application.vala',
-  'window.vala',
-]
-
 vui_deps = [
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
@@ -36,22 +30,16 @@ vui_sources += gnome.compile_resources('vui-resources',
   c_name: 'vui'
 )
 
-executable('vui', vui_sources,
-  dependencies: vui_deps,
-       install: true,
-)
-
-libvui = library(
-  'vui',
-  vui_sources,
-
-  dependencies: [
-          vui_deps,
+libvui = shared_library(
+	'vui',
+	vui_sources,
+	vala_header: 'vui.h',
+	vala_vapi: 'vui.vapi',
+	dependencies: [
+	  vui_deps,
 	  meson.get_compiler('c').find_library('m'),
-          meson.get_compiler('vala').find_library('posix')
-  ],
-  vala_header: 'vui.h',
-  vala_vapi: 'vui.vapi',
-  version: '0.1',
-  install: true,
+	  meson.get_compiler('vala').find_library('posix')
+	],
+	install: true,
+	install_dir: [true, true, true]
 )

@@ -40,6 +40,9 @@
                     "type" : "git",
                     "url" : "."
                 }
+            ],
+            "config-opts" : [
+                "--libdir=lib"
             ]
         }
     ]

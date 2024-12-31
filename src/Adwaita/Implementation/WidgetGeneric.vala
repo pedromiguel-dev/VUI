@@ -1,6 +1,6 @@
 namespace Vui.Impl {
     [GenericAccessors]
-    protected interface Widget<T>{
+    protected interface WidgetOld<T>{
         public abstract T expand (bool hexpand, bool vexpand);
         public abstract T valign (Gtk.Align align);
         public abstract T halign (Gtk.Align align);
@@ -10,7 +10,11 @@ namespace Vui.Impl {
         public abstract T save (string key, string property, GLib.SettingsBindFlags flag);
     }
 
-    public class Generic<T, G> : Widget<T>, GLib.Object  {
+    public struct WidgetImpl<G> {
+        public G _widget;
+    }
+
+    public class Generic<T, G> : WidgetOld<T>, GLib.Object  {
         public static SimpleActionGroup simple_action_group = new SimpleActionGroup();
         public static GLib.Settings gsettings;
 

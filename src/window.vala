@@ -1,4 +1,4 @@
-/* window.vala
+* window.vala
  *
  * Copyright 2024 Pedro Miguel
  *

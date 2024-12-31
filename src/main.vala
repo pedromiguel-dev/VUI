@@ -19,6 +19,5 @@
  */
 
 int main (string[] args) {
-    var app = new Vui.Application ();
-    return app.run (args);
+    return 0;
 }
