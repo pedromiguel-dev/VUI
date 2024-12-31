@@ -1,4 +1,4 @@
-/* main.vala
+/* window.vala
  *
  * Copyright 2024 Pedro Miguel
  *
@@ -17,7 +17,8 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-
-int main (string[] args) {
-    return 0;
+namespace Demo {
+    public Vui.Widget.Window Window(Adw.Application app) {
+        return Vui.Widget.Window(app);
+    }
 }

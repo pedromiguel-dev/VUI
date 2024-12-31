@@ -8,7 +8,6 @@ i18n = import('i18n')
 gnome = import('gnome')
 pkgconfig = import('pkgconfig')
 
-
 subdir('data')
 subdir('src')
 subdir('po')

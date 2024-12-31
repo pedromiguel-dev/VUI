@@ -1,4 +1,4 @@
-* window.vala
+/* main.vala
  *
  * Copyright 2024 Pedro Miguel
  *
@@ -18,14 +18,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Vui {
-    [GtkTemplate (ui = "/io/github/pedromigueldev/vui/window.ui")]
-    public class Window : Adw.ApplicationWindow {
-        [GtkChild]
-        private unowned Gtk.Label label;
 
-        public Window (Gtk.Application app) {
-            Object (application: app);
-        }
-    }
+int main (string[] args) {
+    var app = new Demo.Application ();
+    return app.run (args);
 }

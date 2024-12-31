@@ -1,4 +1,4 @@
-vui_sources = [
+sources = [
   'Adwaita' / 'Implementation' / 'WidgetGeneric.vala',
   'Adwaita' / 'Model' / 'Store.vala',
   'Adwaita' / 'Widgets' / 'AlertDialog.vala',
@@ -20,15 +20,16 @@ vui_sources = [
   'Adwaita' / 'Widgets' / 'Window.vala',
 ]
 
+
+## LIB
+vui_sources = sources + gnome.compile_resources('vui-resources',
+  'vui.gresource.xml',
+  c_name: 'vui'
+)
 vui_deps = [
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
-
-vui_sources += gnome.compile_resources('vui-resources',
-  'vui.gresource.xml',
-  c_name: 'vui'
-)
 
 libvui = shared_library(
 	'vui',
@@ -49,3 +50,21 @@ pkgconfig.generate(libvui,
   name: 'libvui',
   requires: [ vui_deps ],
 )
+
+## DEMO
+demo_sources = sources + [
+  'demo'/'main.vala',
+  'demo'/'window.vala',
+  'demo'/'application.vala'
+]
+
+demo_sources = demo_sources + gnome.compile_resources('demo-resources',
+  'vui.gresource.xml',
+  c_name: 'vui'
+)
+
+executable('VuiDemo', demo_sources,
+  dependencies: vui_deps,
+       install: true,
+)
+
