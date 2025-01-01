@@ -1,44 +1,42 @@
 namespace Vui.Widget {
-    public class Navigation : Vui.Impl.Generic<Navigation, Adw.NavigationView> {
-        protected delegate void Action (Navigation nav);
+    protected delegate void NavigationCallback (Adw.NavigationView nav);
+    protected delegate void pass (GLib.Variant? variant);
 
-        public Navigation bind (Action handle){
-            handle(this);
+    public struct Navigation : Vui.Impl.Wrap<Adw.NavigationView, Navigation> {
+
+        public Navigation bind (NavigationCallback handle){
+            handle(this._widget);
             return this;
         }
 
-        public Navigation on_pushed (owned Action handle){
-            this.widget.pushed.connect (() => {
-                handle(this);
-            });
+        public Navigation on_pushed (NavigationCallback handle){
+            _widget.pushed.connect(handle);
             return this;
         }
 
-        public Navigation add_action (string action_name, Action handle) {
-            var new_action = new SimpleAction("nav." + action_name, null);
-            new_action.activate.connect(() => handle(this));
+  //       public Navigation add_action (string action_name, owned NavigationCallback handle) {
+		// 	var new_action = new SimpleAction("nav." + action_name, null);
+		// 	new_action.activate.connect_after (zap);
 
-            simple_action_group.add_action(new_action);
-            return this;
-        }
+		// 	simple_action_group.add_action(new_action);
+		// 	return this;
+		// }
 
-        public Navigation push_later (params Vui.Widget.Page[] c) {
-            foreach (var item in c){
-                widget.add (item.widget);
-                print("page %s added\n", item.widget.tag);
+        public Navigation push_later (Vui.Widget.Page[] children) {
+            foreach (var item in children){
+                _widget.add (item._widget);
+                print("page %s added\n", item._widget.tag);
             }
             return this;
         }
 
-        public Navigation (params Vui.Widget.Page[] c) {
+        public Navigation (Vui.Widget.Page[] children) {
             widget = new Adw.NavigationView ();
-            foreach (var item in c){
-                this.widget.push (item.widget);
-                widget.add (item.widget);
-                print("page %s added\n", item.widget.tag);
+            foreach (var item in children){
+                _widget.push (item._widget);
+                _widget.add (item._widget);
+                print("page %s added\n", item._widget.tag);
             }
-
-            this.add_action ("pop", (nav) => nav.widget.pop ());
         }
     }
 }

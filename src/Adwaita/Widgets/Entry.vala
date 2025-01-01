@@ -1,14 +1,17 @@
 namespace Vui.Widget {
-    public class Entry : Vui.Impl.Generic<Entry, Gtk.Entry> {
-        public Entry(string placeholder, Vui.Model.Store<string>? write_to = null) {
-            this.widget = new Gtk.Entry();
-            this.widget.set_placeholder_text (placeholder);
 
-            if(write_to != null)
-                this.widget.changed.connect (() => {
-                    print("typed: %s\n", this.widget.text);
-                   write_to.state = this.widget.text;
-                });
+    protected delegate void EntryConnect (Gtk.Editable editable);
+    public struct Entry : Vui.Impl.Wrap<Gtk.Entry, Entry> {
+
+        public Entry(string placeholder) {
+            _widget = new Gtk.Entry();
+            _widget.set_placeholder_text (placeholder);
+        }
+
+        public Entry changed(owned EntryConnect callback) {
+
+            _widget.changed.connect(callback);
+            return this;
         }
     }
 } 

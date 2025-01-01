@@ -1,17 +1,17 @@
 namespace Vui.Widget {
-    public class HeaderBar : Vui.Impl.Generic<HeaderBar, Adw.HeaderBar> {
+    public struct HeaderBar : Vui.Impl.Wrap<Adw.HeaderBar, HeaderBar> {
         public HeaderBar show_back_button (bool show_back_button) {
-            widget.show_back_button = show_back_button;
+            _widget.show_back_button = show_back_button;
             return this;
         }
 
         public HeaderBar show_title (bool show_title) {
-            widget.show_title = show_title;
+            _widget.show_title = show_title;
             return this;
         }
 
         public HeaderBar () {
-            widget = new Adw.HeaderBar ();
+            _widget = new Adw.HeaderBar ();
         }
     }
 }

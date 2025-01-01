@@ -1,6 +1,6 @@
 /* application.vala
  *
- * Copyright 2024 Pedro Miguel
+ * Copyright 2024-2025 Pedro Miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,11 @@
  */
 
 namespace Demo {
-    public class Application : Adw.Application {
-        public Application () {
-            Object (application_id: "io.github.pedromigueldev.vui", flags: ApplicationFlags.DEFAULT_FLAGS);
+    public class Application : Vui.Widget.App {
+
+        public Application (string id) {
+        		Object (application_id: id, flags: ApplicationFlags.DEFAULT_FLAGS);
+			activate.connect(() => { window = Demo.MainWindow (this)._widget;});
         }
 
         construct {
@@ -34,15 +36,6 @@ namespace Demo {
             this.set_accels_for_action ("app.quit", {"<primary>q"});
         }
 
-        public override void activate () {
-            base.activate ();
-            var win = this.active_window;
-            if (win == null) {
-                win = Demo.Window (this)._widget;
-            }
-            win.present ();
-        }
-
         private void on_about_action () {
             string[] developers = { "Pedro Miguel" };
             var about = new Adw.AboutWindow () {
@@ -52,7 +45,7 @@ namespace Demo {
                 developer_name = "Pedro Miguel",
                 version = "0.1.0",
                 developers = developers,
-                copyright = "© 2024 Pedro Miguel",
+                copyright = "© 2024-2025 Pedro Miguel",
             };
 
             about.present ();

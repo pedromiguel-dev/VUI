@@ -1,29 +1,29 @@
 namespace Vui.Widget {
-    public class AlertDialog : Vui.Impl.Generic<AlertDialog, Adw.AlertDialog> {
-        protected delegate void Action (string response);
+    protected delegate void CallbackS (string response);
+    public struct AlertDialog : Vui.Impl.Wrap<Adw.AlertDialog, AlertDialog> {
 
-        public AlertDialog on_response (Action action) {
-            this.widget.response.connect ((res) => action(res));
+        public AlertDialog on_response (CallbackS action) {
+            _widget.response.connect (action);
             return this;
         }
 
         public AlertDialog add_action (string action, Adw.ResponseAppearance style) {
 
-            this.widget.add_response (action.ascii_down(), action);
-            this.widget.set_response_appearance (action.ascii_down(), style);
+            _widget.add_response (action.ascii_down(), action);
+            _widget.set_response_appearance (action.ascii_down(), style);
 
             return this;
         }
 
         public AlertDialog child (Vui.Impl.Generic<Vui.Impl.Generic, Gtk.Widget> c) {
-            this.widget.set_extra_child (c.widget);
+            _widget.set_extra_child (c.widget);
             return this;
         }
 
         public AlertDialog (string title, string description) {
-            widget = new Adw.AlertDialog (title, description);
-            this.widget.present(Vui.Widget.App._active_window_);
-            this.widget.show();
+            _widget = new Adw.AlertDialog (title, description);
+            //_widget.present(Vui.Widget.App._active_window);
+            _widget.show();
         }
     }
 }

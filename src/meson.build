@@ -27,7 +27,7 @@ vui_sources = sources + gnome.compile_resources('vui-resources',
   c_name: 'vui'
 )
 
-vui_gi_name = 'Valui'
+vui_gi_name = 'Vui'
 vui_gi_version = '0.1.0'
 
 vui_gi = vui_gi_name + '-' + vui_gi_version
@@ -56,8 +56,8 @@ libvui = shared_library(
 	  meson.get_compiler('vala').find_library('posix')
 	],
 
-	vala_header: 'valui.h',
-	vala_vapi: 'valui.vapi',
+	vala_header: 'vui.h',
+	vala_vapi: 'vui.vapi',
 	vala_gir: vui_gir,
 
 	version: meson.project_version(),
@@ -115,7 +115,7 @@ demo_sources = demo_sources + gnome.compile_resources('demo-resources',
   c_name: 'vui'
 )
 
-executable('VuiDemo', demo_sources,
+executable('vui', demo_sources,
   dependencies: vui_deps,
        install: true,
 )

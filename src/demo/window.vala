@@ -1,6 +1,6 @@
 /* window.vala
  *
- * Copyright 2024 Pedro Miguel
+ * Copyright 2024-2025 Pedro Miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,43 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+
+using Vui.Widget;
+
 namespace Demo {
-    public Vui.Widget.Window Window(Adw.Application app) {
-        return Vui.Widget.Window(app);
+    public Window MainWindow(Adw.Application app) {
+
+        int numbers[4] = { 0, 1, 2, 3 };
+
+        var title_box = HBox({
+            Label("Journal") {
+                css_classes = { "title-1", "title-bigger" },
+                halign = Gtk.Align.START,
+            },
+            Button.from_icon_name("view-sort-descending-rtl-symbolic") {
+                halign = Gtk.Align.END,
+                vexpand = true, hexpand = true,
+                css_classes = { "flat", "circular", "filter-icon" }
+            }
+        }) {
+            valign = Gtk.Align.CENTER
+        };
+
+
+        return Window(app)
+                .child(
+                       ToolBar(
+                               HeaderBar()
+                                .show_back_button(false)
+                                .show_title(false),
+                               HBox({ title_box }) {
+									vexpand = true, hexpand = true,
+									valign = Gtk.Align.START,
+									margin_top = 0, margin_left = 20,
+									margin_bottom = 0, margin_right = 20
+								}
+                               .spacing(10)
+                       )
+                );
     }
 }

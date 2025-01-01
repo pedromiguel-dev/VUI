@@ -1,14 +1,14 @@
 namespace Vui.Widget {
-    public class MenuButton : Vui.Impl.Generic<MenuButton, Gtk.MenuButton> {
+    public struct MenuButton : Vui.Impl.Wrap<Gtk.MenuButton, MenuButton> {
 
         public MenuButton icon_name (string name){
-            widget.set_icon_name (name);
+            _widget.set_icon_name (name);
             return this;
         }
 
-        public MenuButton (Vui.Impl.Generic<Vui.Impl.Generic, Gtk.Widget> popover) {
+        public MenuButton (Vui.Impl.Wrap popover) {
             var ppvr = new Gtk.Popover () { child = popover.widget };
-            widget = new Gtk.MenuButton () { popover = ppvr};
+            widget = new Gtk.MenuButton () { popover = ppvr };
         }
     }
 }

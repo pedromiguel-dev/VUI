@@ -1,20 +1,72 @@
 namespace Vui.Impl {
-    [GenericAccessors]
-    protected interface WidgetOld<T>{
-        public abstract T expand (bool hexpand, bool vexpand);
-        public abstract T valign (Gtk.Align align);
-        public abstract T halign (Gtk.Align align);
-        public abstract T margins (int top, int left, int bottom, int right);
-        public abstract T css_classes (string[] css_classes);
-        public abstract T height_request (int height);
-        public abstract T save (string key, string property, GLib.SettingsBindFlags flag);
-    }
 
-    public struct WidgetImpl<G> {
+    public struct Wrap<G, T> {
+        static SimpleActionGroup _simple_action_group;
+
+		public SimpleActionGroup simple_action_group {
+            get { if (_simple_action_group == null) 
+                    _simple_action_group = new SimpleActionGroup();
+                    return _simple_action_group;
+            }
+        }
+ 		public Wrap() {
+		}
+
         public G _widget;
+
+        public Gtk.Widget widget {
+            get { return (Gtk.Widget) _widget; }
+            set { _widget = value; }
+        }
+        public bool vexpand {
+            get { return widget.get_vexpand(); }
+            set { widget.set_vexpand(value); }
+        }
+        public bool hexpand {
+            get { return widget.get_hexpand(); }
+            set { widget.set_hexpand(value); }
+        }
+        public Gtk.Align valign {
+            get { return widget.valign; }
+            set { widget.set_valign (value); }
+        }
+        public Gtk.Align halign {
+            get { return widget.halign; }
+            set { widget.set_halign (value); }
+        }
+
+        public int margin_top {
+            get { return widget.margin_top ;}
+            set { widget.margin_top = value ;}
+        }
+        public int margin_left {
+            get { return widget.margin_start ;}
+            set { widget.margin_start = value ;}
+        }
+        public int margin_bottom {
+            get { return widget.margin_bottom ;}
+            set { widget.margin_bottom = value ;}
+        }
+        public int margin_right {
+            get { return widget.margin_end ;}
+            set { widget.margin_end = value ;}
+        }
+
+        public string[] css_classes {
+            set {
+                foreach(var item in value){
+                    widget.add_css_class (item);
+                }
+            }
+        }
+
+        public int height_request {
+            get { return widget.height_request; }
+            set { widget.height_request = value; }
+        }
     }
 
-    public class Generic<T, G> : WidgetOld<T>, GLib.Object  {
+    public class Generic<T, G> {
         public static SimpleActionGroup simple_action_group = new SimpleActionGroup();
         public static GLib.Settings gsettings;
 

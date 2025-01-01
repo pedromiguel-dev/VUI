@@ -1,18 +1,17 @@
 namespace Vui.Widget {
-    public class Separator : Vui.Impl.Generic<Separator, Gtk.Separator> {
+    public struct Separator : Vui.Impl.Wrap<Gtk.Separator, Separator> {
         public Separator(Gtk.Orientation orientation) {
-            widget = new Gtk.Separator (orientation);
+            _widget = new Gtk.Separator (orientation);
         }
     }
-
-    public class VSpacer : Vui.Impl.Generic<VSpacer, Gtk.Separator> {
+    public struct VSpacer : Vui.Impl.Wrap<Gtk.Separator, VSpacer> {
         public VSpacer () {
-            widget = new Gtk.Separator (Gtk.Orientation.VERTICAL) { css_classes = {"spacer"} };
+            _widget = new Gtk.Separator (Gtk.Orientation.VERTICAL) { css_classes = {"spacer"} };
         }
     }
-    public class HSpacer : Vui.Impl.Generic<HSpacer, Gtk.Separator> {
+    public struct HSpacer : Vui.Impl.Wrap<Gtk.Separator, HSpacer> {
         public HSpacer () {
-            widget = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) { css_classes = {"spacer"} };
+            _widget = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) { css_classes = {"spacer"} };
         }
     }
 }

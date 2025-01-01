@@ -1,6 +1,6 @@
 /* main.vala
  *
- * Copyright 2024 Pedro Miguel
+ * Copyright 2024-2025 Pedro Miguel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-
 int main (string[] args) {
-    var app = new Demo.Application ();
-    return app.run (args);
+    return new Demo.Application ("io.github.pedromigueldev.vui" ).run(args);
 }
