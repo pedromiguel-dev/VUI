@@ -1,2 +1,0 @@
-option('introspection', type: 'boolean', value: true, description: 'Whether to build introspection files')
-option('demo', type: 'boolean', value: true, description: 'Whether to build vui-demo')
