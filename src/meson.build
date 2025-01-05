@@ -34,8 +34,6 @@ vui_gi = vui_gi_name + '-' + vui_gi_version
 vui_gir = vui_gi + '.gir'
 vui_typelib = vui_gi + '.typelib'
 
-vui_deps = [dependency('gtk4'), dependency('libadwaita-1', version: '>= 1.4')]
-
 include_dir = join_paths(get_option('prefix'), get_option('includedir'), meson.project_name())
 
 libvui = library(
@@ -58,10 +56,7 @@ libvui = library(
   install_dir: [true, include_dir, true, true],
 )
 
-# install_data(
-#     'vui-1.deps',
-#     install_dir: join_paths(get_option('datadir'), 'vala', 'vapi')
-# )
+install_data('vui-1.deps', install_dir: join_paths(get_option('datadir'), 'vala', 'vapi'))
 
 g_ir_compiler = find_program('g-ir-compiler')
 custom_target(
@@ -90,16 +85,4 @@ pkgconfig.generate(
   name: meson.project_name(),
   description: 'A vala UI framework.',
   requires: vui_deps,
-)
-
-## DEMO
-
-demo_sources = sources + ['demo' / 'main.vala', 'demo' / 'window.vala', 'demo' / 'application.vala']
-demo_sources = demo_sources + gnome.compile_resources('demo-resources', 'demo/demo.gresource.xml', c_name: 'vui')
-
-executable(
-  'vui',
-  demo_sources,
-  dependencies: vui_deps,
-  install: true,
 )

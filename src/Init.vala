@@ -1,8 +1,3 @@
-/*
- * Copyright 2021 elementary, Inc. (https://elementary.io)
- * SPDX-License-Identifier: LGPL-3.0-or-later
- */
-
 namespace Vui {
     private static bool initialized = false;
     private static Gtk.CssProvider? base_provider = null;
@@ -55,7 +50,7 @@ namespace Vui {
 
             if (dark_provider == null) {
                 dark_provider = new Gtk.CssProvider ();
-                dark_provider.load_from_resource ("/io/github/pedromigueldev/vui-dark.css");
+                dark_provider.load_from_resource ("/io/github/pedromigueldev/vui/vui-dark.css");
             }
 
             Gtk.StyleContext.add_provider_for_display (display, dark_provider, Gtk.STYLE_PROVIDER_PRIORITY_THEME);
@@ -66,7 +61,7 @@ namespace Vui {
 
             if (base_provider == null) {
                 base_provider = new Gtk.CssProvider ();
-                base_provider.load_from_resource ("/io/github/pedromigueldev/vui.css");
+                base_provider.load_from_resource ("/io/github/pedromigueldev/vui/vui.css");
             }
 
             Gtk.StyleContext.add_provider_for_display (display, base_provider, Gtk.STYLE_PROVIDER_PRIORITY_THEME);

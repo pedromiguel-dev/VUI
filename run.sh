@@ -2,7 +2,7 @@
 
 # Variables
 BUILD_DIR="build_run"
-EXECUTABLE_PATH="$BUILD_DIR/src/vui"
+EXECUTABLE_PATH="$BUILD_DIR/demo/demo"
 
 if [ ! -d "$BUILD_DIR" ]; then
     echo "Setting up Meson build directory..."

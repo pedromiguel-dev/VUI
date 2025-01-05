@@ -25,9 +25,9 @@ namespace Demo {
         return new Overlay() {
                    expand = { true, true },
                    content = new ScrolledBox() {
-                       child = new VBox() {
+                       content = new VBox() {
                            spacing = 20,
-                           children = {
+                           content = {
                                new Button(),
                                new Button(),
                                new Button(),
@@ -47,11 +47,11 @@ namespace Demo {
                            new Dialog() {
                                title = "new dialog",
                                content_size = { 600, 500 },
-                               child = new ToolBar() {
+                               content = new ToolBar() {
                                    top_bar = new HeaderBar(),
                                    content = new VBox() {
                                        valign = Gtk.Align.CENTER,
-                                       children = {
+                                       content = {
                                            new Label("TESTE") {
                                                css_classes = { "title-1" }
                                            }
@@ -65,37 +65,74 @@ namespace Demo {
     }
 
     public Window MainWindow(Adw.Application app) {
+
+        var second_screen = new ToolBar() {
+            title = "Second",
+            top_bar = new HeaderBar(),
+            content = new VBox() {
+                spacing = 10,
+                valign = Gtk.Align.FILL,
+                expand = { true, true },
+                margins = { 0, 20, 0, 20 },
+                content = {
+                    new VBox() {
+                        valign = Gtk.Align.CENTER,
+                        content = {
+                            new Label("TESTE") {
+                                css_classes = { "title-1" }
+                            }
+                        }
+                    }
+                },
+            }
+        };
+
+        var third_screen = new ToolBar() {
+            title = "Tird screen",
+            top_bar = new HeaderBar(),
+            content = new VBox() {
+                spacing = 10,
+                valign = Gtk.Align.FILL,
+                expand = { true, true },
+                margins = { 0, 20, 0, 20 },
+                content = {
+                    new VBox() {
+                        valign = Gtk.Align.CENTER,
+                        content = {
+                            new Label("3º Tela") {
+                                css_classes = { "title-1" }
+                            }
+                        }
+                    }
+                },
+            }
+        };
+
         var title_box = new HBox() {
-            children = {
+            content = {
                 new Label("Journal") {
                     css_classes = { "title-1", "title-bigger" },
                     halign = Gtk.Align.START,
                     valign = Gtk.Align.CENTER,
                 },
-                new PageLink() {
+                new PageLink(second_screen) {
+                    trigger = new Label("Hey"),
                     halign = Gtk.Align.END,
                     valign = Gtk.Align.CENTER,
                     hexpand = true,
-                    trigger = new Label("Hey")
+                },
+                new PageLink(third_screen) {
+                    trigger = new Label("third screen"),
+                    halign = Gtk.Align.END,
+                    valign = Gtk.Align.CENTER,
+                    hexpand = true,
                 }
-                // new PageLink() {
-                // trigger = new Button.from_icon_name("view-sort-descending-rtl-symbolic") {
-                // halign = Gtk.Align.END,
-                // valign = Gtk.Align.CENTER,
-                // hexpand = true,
-                // css_classes = { "flat", "circular", "filter-icon" },
-                // on_click = () => print("inner btn\n")
-                // }
-                // }
             }
         };
 
-
-        var push = new Vui.Model.Store<bool> (false);
-
         return new Window(app) {
                    content = new Navigation() {
-                       navigation_pages = {
+                       pages = {
                            new ToolBar() {
                                title = "Home",
                                top_bar = new HeaderBar() {
@@ -107,27 +144,11 @@ namespace Demo {
                                    valign = Gtk.Align.FILL,
                                    expand = { true, true },
                                    margins = { 0, 20, 0, 20 },
-                                   children = { title_box, over() },
+                                   content = { title_box, over() },
                                }
                            }
                        }
                    }
         };
-
-        // return new Window(app) {
-        // content = new ToolBar() {
-        // top_bar = new HeaderBar() {
-        // show_back_button = false,
-        // show_title = false,
-        // },
-        // content = new VBox() {
-        // spacing = 10,
-        // valign = Gtk.Align.FILL,
-        // expand = { true, true },
-        // margins = { 0, 20, 0, 20 },
-        // children = { title_box, over() },
-        // }
-        // }
-        // };
     }
 }
