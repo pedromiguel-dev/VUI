@@ -1,30 +1,30 @@
-namespace Vui.Widget {
 
-    protected delegate void handle_function<T> (T this_);
-    public struct Window : Vui.Impl.Wrap<Adw.ApplicationWindow, Window> {
+protected delegate void Vui.Widget.window_handle_callback<T> (T this_);
 
-        public static App _app {get {return _app; } set{_app = value;} }
+public class Vui.Widget.Window : Vui.Impl.Generic<Adw.ApplicationWindow> {
 
-        public Window child (Vui.Impl.Wrap content) {
-            _widget.set_content (content.widget);
-            return this;
-        }
-
-        public Window (owned Adw.Application app) {
-            _widget = new Adw.ApplicationWindow (app);
-        }
-
-        public Window bind (handle_function<Window?> handle){
-            handle(this);
-            return this;
-        }
-
-        public Window handle () {
-            var handle = new Gtk.WindowHandle ();
-            handle.child = this._widget.child;
-            _widget.set_child (handle);
-            return this;
+    public Vui.Impl.Generic content {
+        set {
+            widget.set_content (value.gtk_widget);
         }
     }
-}
 
+    public Window (owned Adw.Application app) {
+        widget = new Adw.ApplicationWindow (app);
+    }
+
+    public Window bind (window_handle_callback<Window?> handle) {
+        handle (this);
+        return this;
+    }
+
+    public Window handle () {
+        var handle = new Gtk.WindowHandle ();
+        handle.child = this.widget.child;
+        widget.set_child (handle);
+
+		save ("width", "default-width", SettingsBindFlags.DEFAULT);
+		save ("height", "default-height", SettingsBindFlags.DEFAULT);
+        return this;
+    }
+}

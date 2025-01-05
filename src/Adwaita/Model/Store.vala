@@ -5,8 +5,8 @@ namespace Vui.Model {
         public T state {
             get { return _state; }
             set {
-                _state = value;
                 changed(value);
+                _state = value;
             }
         }
 
@@ -17,3 +17,4 @@ namespace Vui.Model {
         }
     }
 }
+

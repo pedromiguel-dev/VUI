@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/github/pedromigueldev/vui/demo">
+    <file alias="vui.css">Styles/vui.css</file>
   </gresource>
 </gresources>

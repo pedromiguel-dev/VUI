@@ -1,17 +1,18 @@
-namespace Vui.Widget {
-    public struct Overlay : Vui.Impl.Wrap<Gtk.Overlay, Overlay> {
-        public Overlay set_overlay (Vui.Impl.Wrap overlay) {
-            _widget.add_overlay (overlay.widget);
-            return this;
-        }
+public class Vui.Widget.Overlay : Vui.Impl.Generic<Gtk.Overlay> {
 
-        public Overlay set_child (Vui.Impl.Wrap child) {
-            _widget.child = child.widget;
-            return this;
+    public Vui.Impl.Generic overlay {
+        set {
+            widget.add_overlay (value.gtk_widget);
         }
+    }
 
-        public Overlay() {
-            widget = new Gtk.Overlay ();
+    public Vui.Impl.Generic content {
+        set {
+            widget.set_child (value.gtk_widget);
         }
+    }
+
+    public Overlay () {
+        widget = new Gtk.Overlay ();
     }
 }

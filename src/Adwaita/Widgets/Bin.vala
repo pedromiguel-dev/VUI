@@ -1,14 +1,19 @@
-namespace Vui.Widget{
-    public struct Bin : Vui.Impl.Wrap<Adw.Bin, Bin> {
+namespace Vui.Widget {
+    public class Bin : Vui.Impl.Generic<Adw.Bin> {
 
-        public Bin overflow (Gtk.Overflow overflow) {
-            _widget.set_overflow (overflow);
-            return this;
+        public Gtk.Overflow overflow {
+            set {
+                widget.set_overflow (value);
+            }
         }
 
-        public Bin (Vui.Impl.Wrap child) {
-            _widget = new Adw.Bin();
-            _widget.set_child(child.widget);
+        public Vui.Impl.Generic child {
+            set {
+                widget.set_child (value.gtk_widget);
+            }
+        }
+        public Bin () {
+            widget = new Adw.Bin ();
         }
     }
 }

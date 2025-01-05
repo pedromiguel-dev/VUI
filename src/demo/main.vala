@@ -18,6 +18,11 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+using Vui.Widget;
+
 int main (string[] args) {
-    return new Demo.Application ("io.github.pedromigueldev.vui" ).run(args);
+	var app = new App ("io.github.pedromigueldev.vui") {
+		content = (app) => Demo.MainWindow(app)
+	};
+    return app.run(args) ;
 }

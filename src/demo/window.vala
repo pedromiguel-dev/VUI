@@ -21,39 +21,113 @@
 using Vui.Widget;
 
 namespace Demo {
+    public Overlay over() {
+        return new Overlay() {
+                   expand = { true, true },
+                   content = new ScrolledBox() {
+                       child = new VBox() {
+                           spacing = 20,
+                           children = {
+                               new Button(),
+                               new Button(),
+                               new Button(),
+                               new Button(),
+                               new Button() {
+                                   on_click = () => print("hey")
+                               },
+                           }
+                       }
+                   },
+                   overlay = new Button.from_icon_name("list-add-symbolic") {
+                       halign = Gtk.Align.END, valign = Gtk.Align.END,
+                       margins = { 0, 0, 20, 0 },
+                       expand = { true, false },
+                       css_classes = { "fill", "circular", "suggested-action", "filter-icon" },
+                       on_click = () => {
+                           new Dialog() {
+                               title = "new dialog",
+                               content_size = { 600, 500 },
+                               child = new ToolBar() {
+                                   top_bar = new HeaderBar(),
+                                   content = new VBox() {
+                                       valign = Gtk.Align.CENTER,
+                                       children = {
+                                           new Label("TESTE") {
+                                               css_classes = { "title-1" }
+                                           }
+                                       }
+                                   }
+                               }
+                           };
+                       }
+                   }
+        };
+    }
+
     public Window MainWindow(Adw.Application app) {
-
-        int numbers[4] = { 0, 1, 2, 3 };
-
-        var title_box = HBox({
-            Label("Journal") {
-                css_classes = { "title-1", "title-bigger" },
-                halign = Gtk.Align.START,
-            },
-            Button.from_icon_name("view-sort-descending-rtl-symbolic") {
-                halign = Gtk.Align.END,
-                vexpand = true, hexpand = true,
-                css_classes = { "flat", "circular", "filter-icon" }
+        var title_box = new HBox() {
+            children = {
+                new Label("Journal") {
+                    css_classes = { "title-1", "title-bigger" },
+                    halign = Gtk.Align.START,
+                    valign = Gtk.Align.CENTER,
+                },
+                new PageLink() {
+                    halign = Gtk.Align.END,
+                    valign = Gtk.Align.CENTER,
+                    hexpand = true,
+                    trigger = new Label("Hey")
+                }
+                // new PageLink() {
+                // trigger = new Button.from_icon_name("view-sort-descending-rtl-symbolic") {
+                // halign = Gtk.Align.END,
+                // valign = Gtk.Align.CENTER,
+                // hexpand = true,
+                // css_classes = { "flat", "circular", "filter-icon" },
+                // on_click = () => print("inner btn\n")
+                // }
+                // }
             }
-        }) {
-            valign = Gtk.Align.CENTER
         };
 
 
-        return Window(app)
-                .child(
-                       ToolBar(
-                               HeaderBar()
-                                .show_back_button(false)
-                                .show_title(false),
-                               HBox({ title_box }) {
-									vexpand = true, hexpand = true,
-									valign = Gtk.Align.START,
-									margin_top = 0, margin_left = 20,
-									margin_bottom = 0, margin_right = 20
-								}
-                               .spacing(10)
-                       )
-                );
+        var push = new Vui.Model.Store<bool> (false);
+
+        return new Window(app) {
+                   content = new Navigation() {
+                       navigation_pages = {
+                           new ToolBar() {
+                               title = "Home",
+                               top_bar = new HeaderBar() {
+                                   show_back_button = false,
+                                   show_title = false,
+                               },
+                               content = new VBox() {
+                                   spacing = 10,
+                                   valign = Gtk.Align.FILL,
+                                   expand = { true, true },
+                                   margins = { 0, 20, 0, 20 },
+                                   children = { title_box, over() },
+                               }
+                           }
+                       }
+                   }
+        };
+
+        // return new Window(app) {
+        // content = new ToolBar() {
+        // top_bar = new HeaderBar() {
+        // show_back_button = false,
+        // show_title = false,
+        // },
+        // content = new VBox() {
+        // spacing = 10,
+        // valign = Gtk.Align.FILL,
+        // expand = { true, true },
+        // margins = { 0, 20, 0, 20 },
+        // children = { title_box, over() },
+        // }
+        // }
+        // };
     }
 }

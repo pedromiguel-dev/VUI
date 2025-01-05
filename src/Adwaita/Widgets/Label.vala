@@ -1,31 +1,40 @@
-namespace Vui.Widget {
+protected delegate string Vui.Widget.label_string_callback ();
 
-    protected delegate string String ();
-    public struct Label : Vui.Impl.Wrap<Gtk.Label, Label> {
+public class Vui.Widget.Label : Vui.Impl.Generic<Gtk.Label> {
 
-        public Label wrap (bool wrap) {
-            _widget.set_wrap (wrap);
-            return this;
+    public unowned label_string_callback? on_update {
+        set {
+            widget.label = value ();
         }
-        public Label lines (int lines) {
-            _widget.set_lines (lines);
-            return this;
-        }
-        public Label ellipsize (Pango.EllipsizeMode mode) {
-            _widget.set_ellipsize (mode);
-            return this;
-        }
+    }
 
-        // public Label.ref (String? label = null, Vui.Model.Store? state = null) {
-        //     _widget = new Gtk.Label (label());
-        //     if(state != null)
-        //         state.changed.connect (() => {
-        //            _widget.label = label();
-        //         });
-        // }
-
-        public Label (string label) {
-            _widget = new Gtk.Label (label);
+    public bool wrap {
+        set {
+            widget.set_wrap (value);
         }
+    }
+
+    public int lines {
+        set {
+            widget.set_lines (value);
+        }
+    }
+
+    public Pango.EllipsizeMode ellipsize {
+        set {
+            widget.set_ellipsize (value);
+        }
+    }
+
+    public Label.ref (/**callback_string ? on_update = null, Vui.Model.Store ? state = null**/) {
+        // widget = new Gtk.Label (on_update ());
+        // if (state != null)
+        // state.changed.connect (() => {
+        // widget.label = on_update ();
+        // });
+    }
+
+    public Label (string label) {
+        widget = new Gtk.Label (label);
     }
 }

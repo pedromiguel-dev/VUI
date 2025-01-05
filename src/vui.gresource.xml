@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/github/pedromigueldev/vui">
+    <file alias="vui.css">Styles/vui.css</file>
+    <file alias="vui-dark.css">Styles/vui-dark.css</file>
   </gresource>
 </gresources>

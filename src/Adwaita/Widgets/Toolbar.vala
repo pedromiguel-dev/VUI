@@ -1,11 +1,22 @@
-namespace Vui.Widget {
-    using Vui.Impl;
-    public struct ToolBar : Vui.Impl.Wrap<Adw.ToolbarView, ToolBar> {
-        public ToolBar (Vui.Impl.Wrap top, Vui.Impl.Wrap content,  Vui.Impl.Wrap? bottom_bar = null ) {
-            _widget = new Adw.ToolbarView ();
-            _widget.add_top_bar (top.widget);
-            _widget.set_content (content.widget);
-            _widget.add_bottom_bar (bottom_bar == null ? new Gtk.Box (Gtk.Orientation.VERTICAL ,0) : bottom_bar.widget);
+
+public class Vui.Widget.ToolBar : Vui.Impl.Generic<Adw.ToolbarView> {
+
+    public Vui.Impl.Generic top_bar {
+        set {
+            widget.add_top_bar (value.gtk_widget);
         }
+    }
+    public Vui.Impl.Generic bottom_bar {
+        set {
+            widget.add_bottom_bar  (value.gtk_widget);
+        }
+    }
+    public Vui.Impl.Generic content {
+        set {
+            widget.set_content (value.gtk_widget);
+        }
+    }
+    public ToolBar () {
+        widget = new Adw.ToolbarView ();
     }
 }
