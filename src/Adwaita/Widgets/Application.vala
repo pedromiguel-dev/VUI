@@ -20,6 +20,11 @@ public class Vui.Widget.App : Adw.Application {
         base.activate ();
     }
 
+    public override void startup () {
+        Vui.init ();
+        base.startup ();
+    }
+
     public App (string id) {
         Object (application_id : id, flags: ApplicationFlags.DEFAULT_FLAGS);
 

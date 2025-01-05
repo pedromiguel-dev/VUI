@@ -13,7 +13,7 @@ public class Vui.Widget.Dialog : Vui.Impl.Generic<Adw.Dialog> {
         }
     }
 
-    public Vui.Impl.Generic child {
+    public Vui.Impl.Generic content {
         set {
             widget.set_child (value.gtk_widget);
         }

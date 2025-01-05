@@ -7,7 +7,7 @@ namespace Vui.Widget {
             }
         }
 
-        public Vui.Impl.Generic child {
+        public Vui.Impl.Generic content {
             set {
                 widget.set_child (value.gtk_widget);
             }

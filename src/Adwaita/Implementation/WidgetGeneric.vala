@@ -20,6 +20,10 @@ namespace Vui.Impl {
             set; get; default = null;
         }
 
+        public Vui.Impl.Generic[] ? destination {
+            set; get; default = null;
+        }
+
         public bool[] expand {
             set {
                 gtk_widget.set_vexpand (value[0]);

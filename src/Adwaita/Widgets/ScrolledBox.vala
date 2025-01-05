@@ -12,7 +12,7 @@ public class ScrolledBox : Vui.Impl.Generic<Gtk.ScrolledWindow>  {
         }
     }
 
-    public Vui.Impl.Generic child {
+    public Vui.Impl.Generic content {
         set {
             widget.set_child (value.gtk_widget);
         }

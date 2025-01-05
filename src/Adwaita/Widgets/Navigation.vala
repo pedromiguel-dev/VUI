@@ -8,16 +8,24 @@ namespace Vui.Widget {
             }
         }
 
-        public unowned on_click_callback? on_click {
+        private unowned on_click_callback? on_click {
             set {
                 widget.clicked.connect (() => value ());
             }
         }
 
-        public PageLink () {
-            widget = new Gtk.Button ();
-            this.widget.css_classes = { "nav_link" };
-            this.on_click = () => print ("Hey");
+        public PageLink (Vui.Impl.Generic dest) {
+            widget = new Gtk.Button () {
+                focus_on_click = false,
+                can_focus = false
+            };
+            widget.css_classes = { "nav_link" };
+
+            this.destination = { dest };
+            this.on_click = () => {
+                string action_name = @"$(this.destination[0].title)";
+                Vui.Impl.Generic.simple_action_group.activate_action ("nav." + action_name, null);
+            };
         }
     }
 
@@ -25,12 +33,19 @@ namespace Vui.Widget {
 
     public class Navigation : Vui.Impl.Generic<Adw.NavigationView> {
 
+        protected delegate void NavigationCallback (Adw.NavigationView nav);
+
         public Navigation bind (NavigationCallback handle) {
             handle (this.widget);
             return this;
         }
 
-        protected delegate void NavigationCallback (Adw.NavigationView nav);
+        private void add_action (string action_name, owned NavigationCallback handle) {
+            var new_action = new SimpleAction ("nav." + action_name, null);
+            new_action.activate.connect (() => handle (this.widget));
+
+            Vui.Impl.Generic.simple_action_group.add_action (new_action);
+        }
 
         public unowned NavigationCallback? on_pushed {
             set {
@@ -40,31 +55,31 @@ namespace Vui.Widget {
             }
         }
 
-        // public Navigation add_action (string action_name, owned NavigationCallback handle) {
-        // var new_action = new SimpleAction("nav." + action_name, null);
-        // new_action.activate.connect_after (zap);
-
-        // simple_action_group.add_action(new_action);
-        // return this;
-        // }
-
-        public Vui.Widget.Page[] push_later {
+        public Vui.Impl.Generic push {
             set {
-                foreach (var item in value) {
-                    widget.add (item.widget);
-                    print ("page %s added\n", item.widget.tag);
-                }
+                var tmp = new Page (value.title != null ? value.title : "") {
+                    content = value
+                };
+                widget.add (tmp.widget);
+                print ("page %s added\n", tmp.widget.tag);
             }
         }
 
-        public Vui.Impl.Generic[] navigation_pages {
+        public Vui.Impl.Generic[] pages {
             set {
                 foreach (var item in value) {
-                    var tmp = new Page (item.title != null ? item.title : "") {
-                        child = item
-                    };
-                    widget.add (tmp.widget);
-                    print ("page %s added\n", tmp.widget.tag);
+                    push = item;
+                }
+                foreach (var item in value) {
+                    foreach (var dest in item.destination) {
+                        if (dest != null) {
+                            push = dest;
+                            add_action (dest.title, (nav) => {
+                                print (@"pushing $(dest.title)");
+                                this.widget.push_by_tag (dest.title);
+                            });
+                        }
+                    }
                 }
             }
         }
