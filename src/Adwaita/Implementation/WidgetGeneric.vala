@@ -6,6 +6,8 @@ namespace Vui.Impl {
         public static GLib.Settings gsettings;
 
         public virtual void save (string key, string property, GLib.SettingsBindFlags flag) {
+            if (gsettings == null)
+                gsettings = new GLib.Settings (Vui.Widget.App.id);
             Vui.Impl.Generic.gsettings.bind (key, this.gtk_widget, property, flag);
         }
 

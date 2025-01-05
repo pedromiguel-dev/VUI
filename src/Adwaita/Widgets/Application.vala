@@ -1,5 +1,6 @@
 public class Vui.Widget.App : Adw.Application {
 
+    public static string id;
     public static Gtk.Window window;
 
     protected delegate Vui.Widget.Window AppWindowAction (Adw.Application app);
@@ -27,6 +28,7 @@ public class Vui.Widget.App : Adw.Application {
 
     public App (string id) {
         Object (application_id : id, flags: ApplicationFlags.DEFAULT_FLAGS);
+        App.id = id;
 
         if (Vui.Impl.Generic.gsettings == null)
             Vui.Impl.Generic.gsettings = new GLib.Settings (this.get_application_id ());

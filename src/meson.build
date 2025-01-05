@@ -4,7 +4,6 @@ sources = [
   'Adwaita' / 'Implementation' / 'Callbacks.vala',
   'Adwaita' / 'Model' / 'Store.vala',
   'Adwaita' / 'Widgets' / 'AlertDialog.vala',
-  'Adwaita' / 'Widgets' / 'App.vala',
   'Adwaita' / 'Widgets' / 'Application.vala',
   'Adwaita' / 'Widgets' / 'Bin.vala',
   'Adwaita' / 'Widgets' / 'Box.vala',
@@ -53,7 +52,7 @@ libvui = library(
 
   version: meson.project_version(),
   install: true,
-  install_dir: [true, include_dir, true, true],
+  install_dir: [true, true, true, true],
 )
 
 install_data('vui-1.deps', install_dir: join_paths(get_option('datadir'), 'vala', 'vapi'))
@@ -85,4 +84,6 @@ pkgconfig.generate(
   name: meson.project_name(),
   description: 'A vala UI framework.',
   requires: vui_deps,
+  version: meson.project_version(),
+  url: 'https://github.com/pedromigueldev/vui',
 )
