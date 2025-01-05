@@ -1,4 +1,13 @@
 namespace Vui.Impl {
+
+    public abstract class Derived : Generic<Gtk.Widget> {
+        public new virtual Generic<Gtk.Widget> derived {
+            set {
+                this.widget = value.widget;
+            }
+        }
+    }
+
     public abstract class Generic<G>: GLib.Object {
 
         public static Vui.Widget.App app { get { return app; } set { app = value; } }

@@ -21,38 +21,71 @@
 using Vui.Widget;
 
 namespace Demo {
-    public Overlay over() {
-        return new Overlay() {
+    public class LockIcon : Vui.Impl.Derived {
+        public LockIcon () {
+            derived = new VBox () {
+                content = {
+                    new Image.from_icon_name ("system-lock-screen-symbolic") {
+                        pixel_size = 32,
+                        halign = Gtk.Align.CENTER,
+                        css_classes = { "lock-icon-image-invert" }
+                    }
+                },
+                css_classes = { "lock-icon" },
+                halign = Gtk.Align.CENTER,
+                spacing = 10
+            };
+        }
+    }
+
+    public Overlay over () {
+        return new Overlay () {
                    expand = { true, true },
-                   content = new ScrolledBox() {
-                       content = new VBox() {
+                   content = new ScrolledBox () {
+                       content = new VBox () {
                            spacing = 20,
                            content = {
-                               new Button(),
-                               new Button(),
-                               new Button(),
-                               new Button(),
-                               new Button() {
-                                   on_click = () => print("hey")
+                               new Button () {
+                                   on_click = () => {
+                                       new AlertDialog ("Hey it's a dialog!", "This is just a presentaion") {
+                                           content = new VBox () {
+                                               content = {
+                                                   new LockIcon (),
+                                                   new Entry ("Type your password")
+                                               },
+                                               expand = { true, true }
+                                           },
+                                           action = { "Try me." },
+                                           action_suggested = "Close window",
+                                           action_destructive = "Cancel",
+                                           on_response = (response) => print (response)
+                                       };
+                                   }
+                               },
+                               new Button (),
+                               new Button (),
+                               new Button (),
+                               new Button () {
+                                   on_click = () => print ("hey")
                                },
                            }
                        }
                    },
-                   overlay = new Button.from_icon_name("list-add-symbolic") {
+                   overlay = new Button.from_icon_name ("list-add-symbolic") {
                        halign = Gtk.Align.END, valign = Gtk.Align.END,
                        margins = { 0, 0, 20, 0 },
                        expand = { true, false },
                        css_classes = { "fill", "circular", "suggested-action", "filter-icon" },
                        on_click = () => {
-                           new Dialog() {
+                           new Dialog () {
                                title = "new dialog",
                                content_size = { 600, 500 },
-                               content = new ToolBar() {
-                                   top_bar = new HeaderBar(),
-                                   content = new VBox() {
+                               content = new ToolBar () {
+                                   top_bar = new HeaderBar (),
+                                   content = new VBox () {
                                        valign = Gtk.Align.CENTER,
                                        content = {
-                                           new Label("TESTE") {
+                                           new Label ("TESTE") {
                                                css_classes = { "title-1" }
                                            }
                                        }
@@ -64,21 +97,21 @@ namespace Demo {
         };
     }
 
-    public Window MainWindow(Adw.Application app) {
+    public Window MainWindow (Adw.Application app) {
 
-        var second_screen = new ToolBar() {
+        var second_screen = new ToolBar () {
             title = "Second",
-            top_bar = new HeaderBar(),
-            content = new VBox() {
+            top_bar = new HeaderBar (),
+            content = new VBox () {
                 spacing = 10,
                 valign = Gtk.Align.FILL,
                 expand = { true, true },
                 margins = { 0, 20, 0, 20 },
                 content = {
-                    new VBox() {
+                    new VBox () {
                         valign = Gtk.Align.CENTER,
                         content = {
-                            new Label("TESTE") {
+                            new Label ("TESTE") {
                                 css_classes = { "title-1" }
                             }
                         }
@@ -87,19 +120,19 @@ namespace Demo {
             }
         };
 
-        var third_screen = new ToolBar() {
+        var third_screen = new ToolBar () {
             title = "Tird screen",
-            top_bar = new HeaderBar(),
-            content = new VBox() {
+            top_bar = new HeaderBar (),
+            content = new VBox () {
                 spacing = 10,
                 valign = Gtk.Align.FILL,
                 expand = { true, true },
                 margins = { 0, 20, 0, 20 },
                 content = {
-                    new VBox() {
+                    new VBox () {
                         valign = Gtk.Align.CENTER,
                         content = {
-                            new Label("3º Tela") {
+                            new Label ("3º Tela") {
                                 css_classes = { "title-1" }
                             }
                         }
@@ -108,21 +141,21 @@ namespace Demo {
             }
         };
 
-        var title_box = new HBox() {
+        var title_box = new HBox () {
             content = {
-                new Label("Journal") {
+                new Label ("Journal") {
                     css_classes = { "title-1", "title-bigger" },
                     halign = Gtk.Align.START,
                     valign = Gtk.Align.CENTER,
                 },
-                new PageLink(second_screen) {
-                    trigger = new Label("Hey"),
+                new PageLink (second_screen) {
+                    trigger = new Label ("Hey"),
                     halign = Gtk.Align.END,
                     valign = Gtk.Align.CENTER,
                     hexpand = true,
                 },
-                new PageLink(third_screen) {
-                    trigger = new Label("third screen"),
+                new PageLink (third_screen) {
+                    trigger = new Label ("third screen"),
                     halign = Gtk.Align.END,
                     valign = Gtk.Align.CENTER,
                     hexpand = true,
@@ -130,21 +163,21 @@ namespace Demo {
             }
         };
 
-        return new Window(app) {
-                   content = new Navigation() {
+        return new Window (app) {
+                   content = new Navigation () {
                        pages = {
-                           new ToolBar() {
+                           new ToolBar () {
                                title = "Home",
-                               top_bar = new HeaderBar() {
+                               top_bar = new HeaderBar () {
                                    show_back_button = false,
                                    show_title = false,
                                },
-                               content = new VBox() {
+                               content = new VBox () {
                                    spacing = 10,
                                    valign = Gtk.Align.FILL,
                                    expand = { true, true },
                                    margins = { 0, 20, 0, 20 },
-                                   content = { title_box, over() },
+                                   content = { title_box, over () },
                                }
                            }
                        }
