@@ -6,12 +6,12 @@ namespace Vui.Widget {
     }
     public class VSpacer : Vui.Impl.Generic<Gtk.Separator> {
         public VSpacer () {
-            widget = new Gtk.Separator (Gtk.Orientation.VERTICAL) { css_classes = { "spacer" } };
+            widget = new Gtk.Separator (Gtk.Orientation.VERTICAL);
         }
     }
     public class HSpacer : Vui.Impl.Generic<Gtk.Separator> {
         public HSpacer () {
-            widget = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) { css_classes = { "spacer" } };
+            widget = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
         }
     }
 }

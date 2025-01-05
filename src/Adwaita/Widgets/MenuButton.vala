@@ -7,9 +7,14 @@ namespace Vui.Widget {
             }
         }
 
-        public MenuButton (Vui.Impl.Generic popover) {
-            var tmp = new Gtk.Popover () { child = popover.gtk_widget };
-            widget = new Gtk.MenuButton () { popover = tmp };
+        public Vui.Impl.Generic content {
+            set {
+                this.widget.set_popover (new Gtk.Popover () { child = value.gtk_widget });
+            }
+        }
+
+        public MenuButton () {
+            widget = new Gtk.MenuButton ();
         }
     }
 }

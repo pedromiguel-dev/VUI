@@ -1,25 +1,48 @@
 namespace Vui.Widget {
-    protected delegate void CallbackS (string response);
+
+    public struct AlertDialogAction {
+        string name;
+        Adw.ResponseAppearance style;
+    }
 
     public class AlertDialog : Vui.Impl.Generic<Adw.AlertDialog> {
 
-        public CallbackS on_response {
+        protected delegate void OnResponse (string response);
+
+        public unowned OnResponse? on_response {
             set {
-                widget.response.connect (value);
+                this.widget.response.connect ((res) => value (res));
             }
         }
 
+        public AlertDialogAction action {
+            set {
+                widget.add_response (value.name.ascii_down (), value.name);
+                widget.set_response_appearance (value.name.ascii_down (), value.style);
+            }
+        }
 
-        // public AlertDialog add_action (string action, Adw.ResponseAppearance style) {
+        public string action_default {
+            set {
+                widget.add_response (value.ascii_down (), value);
+                widget.set_response_appearance (value.ascii_down (), Adw.ResponseAppearance.DEFAULT);
+            }
+        }
 
-        // widget.add_response (action.ascii_down (), action);
-        // widget.set_response_appearance (action.ascii_down (), style);
+        public string action_suggested {
+            set {
+                widget.add_response (value.ascii_down (), value);
+                widget.set_response_appearance (value.ascii_down (), Adw.ResponseAppearance.SUGGESTED);
+            }
+        }
+        public string action_destructive {
+            set {
+                widget.add_response (value.ascii_down (), value);
+                widget.set_response_appearance (value.ascii_down (), Adw.ResponseAppearance.DESTRUCTIVE);
+            }
+        }
 
-        // return this;
-        // }
-
-
-        public Vui.Impl.Generic child {
+        public Vui.Impl.Generic content {
             set {
                 widget.set_extra_child (value.gtk_widget);
             }
@@ -27,7 +50,7 @@ namespace Vui.Widget {
 
         public AlertDialog (string title, string description) {
             widget = new Adw.AlertDialog (title, description);
-            // widget.present(Vui.Widget.App._active_window);
+            widget.present (Vui.Widget.App.window);
             widget.show ();
         }
     }
