@@ -24,13 +24,11 @@ public class Vui.Widget.App : Adw.Application {
     public override void startup () {
         Vui.init ();
         base.startup ();
+        if (Vui.Impl.Generic.gsettings == null)
+            Vui.Impl.Generic.gsettings = new GLib.Settings (this.get_application_id ());
     }
 
     public App (string id) {
         Object (application_id : id, flags: ApplicationFlags.DEFAULT_FLAGS);
-        App.id = id;
-
-        if (Vui.Impl.Generic.gsettings == null)
-            Vui.Impl.Generic.gsettings = new GLib.Settings (this.get_application_id ());
     }
 }

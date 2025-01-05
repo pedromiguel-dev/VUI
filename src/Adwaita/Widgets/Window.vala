@@ -9,9 +9,6 @@ public class Vui.Widget.Window : Vui.Impl.Generic<Adw.ApplicationWindow> {
         }
     }
 
-    public Window (owned Adw.Application app) {
-        widget = new Adw.ApplicationWindow (app);
-    }
 
     public Window bind (window_handle_callback<Window?> handle) {
         handle (this);
@@ -23,8 +20,12 @@ public class Vui.Widget.Window : Vui.Impl.Generic<Adw.ApplicationWindow> {
         handle.child = this.widget.child;
         widget.set_child (handle);
 
-		save ("width", "default-width", SettingsBindFlags.DEFAULT);
-		save ("height", "default-height", SettingsBindFlags.DEFAULT);
         return this;
+    }
+
+    public Window (owned Adw.Application app) {
+        widget = new Adw.ApplicationWindow (app);
+        save ("width", this.widget, "default-width", SettingsBindFlags.DEFAULT);
+        save ("height", this.widget, "default-height", SettingsBindFlags.DEFAULT);
     }
 }

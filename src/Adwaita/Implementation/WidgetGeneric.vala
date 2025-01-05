@@ -5,10 +5,8 @@ namespace Vui.Impl {
         public static SimpleActionGroup simple_action_group = new SimpleActionGroup ();
         public static GLib.Settings gsettings;
 
-        public virtual void save (string key, string property, GLib.SettingsBindFlags flag) {
-            if (gsettings == null)
-                gsettings = new GLib.Settings (Vui.Widget.App.id);
-            Vui.Impl.Generic.gsettings.bind (key, this.gtk_widget, property, flag);
+        public virtual void save (string key, Gtk.Widget widget, string property, GLib.SettingsBindFlags flag) {
+            Vui.Impl.Generic.gsettings.bind (key, widget, property, flag);
         }
 
         public virtual G widget { get; set; }
