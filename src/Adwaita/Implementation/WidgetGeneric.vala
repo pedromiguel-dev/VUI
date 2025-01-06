@@ -1,7 +1,7 @@
 namespace Vui.Impl {
 
     public abstract class Derived : Generic<Gtk.Widget> {
-        public new virtual Generic<Gtk.Widget> derived {
+        public virtual Generic<Gtk.Widget> derived {
             set {
                 this.widget = value.widget;
             }

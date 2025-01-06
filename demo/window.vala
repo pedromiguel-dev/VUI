@@ -39,6 +39,10 @@ namespace Demo {
     }
 
     public Overlay over () {
+
+        var string = new Vui.Model.Store<string> ("");
+        string.changed.connect ((state) => print (string.state));
+
         return new Overlay () {
                    expand = { true, true },
                    content = new ScrolledBox () {
@@ -51,7 +55,9 @@ namespace Demo {
                                            content = new VBox () {
                                                content = {
                                                    new LockIcon (),
-                                                   new Entry ("Type your password")
+                                                   new Entry ("Type your password") {
+                                                       string_bufer = string
+                                                   }
                                                },
                                                expand = { true, true }
                                            },
