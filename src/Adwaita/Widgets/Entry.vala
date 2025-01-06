@@ -9,9 +9,11 @@ namespace Vui.Widget {
             widget.set_placeholder_text (placeholder);
         }
 
-        public unowned Vui.Model.Store<string> string_bufer {
+        public delegate void srting_buffer_callback (string text);
+
+        public unowned srting_buffer_callback? string_buffer {
             set {
-                widget.changed.connect ((e) => value.state = e.text);
+                this.widget.changed.connect ((e) => value (e.text));
             }
         }
     }

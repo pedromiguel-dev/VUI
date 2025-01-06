@@ -7,7 +7,7 @@ namespace Vui.Widget {
 
     public class AlertDialog : Vui.Impl.Generic<Adw.AlertDialog> {
 
-        protected delegate void OnResponse (string response);
+        protected delegate void OnResponse (unowned string response);
 
         public unowned OnResponse? on_response {
             set {

@@ -38,69 +38,69 @@ namespace Demo {
         }
     }
 
-    public Overlay over () {
+    public class OverlayClass : Vui.Impl.Derived {
+        construct {
+            var StringBuffer = "";
 
-        var string = new Vui.Model.Store<string> ("");
-        string.changed.connect ((state) => print (string.state));
-
-        return new Overlay () {
-                   expand = { true, true },
-                   content = new ScrolledBox () {
-                       content = new VBox () {
-                           spacing = 20,
-                           content = {
-                               new Button () {
-                                   on_click = () => {
-                                       new AlertDialog ("Hey it's a dialog!", "This is just a presentaion") {
-                                           content = new VBox () {
-                                               content = {
-                                                   new LockIcon (),
-                                                   new Entry ("Type your password") {
-                                                       string_bufer = string
-                                                   }
-                                               },
-                                               expand = { true, true }
-                                           },
-                                           action = { "Try me." },
-                                           action_suggested = "Close window",
-                                           action_destructive = "Cancel",
-                                           on_response = (response) => print (response)
-                                       };
-                                   }
-                               },
-                               new Button (),
-                               new Button (),
-                               new Button (),
-                               new Button () {
-                                   on_click = () => print ("hey")
-                               },
-                           }
-                       }
-                   },
-                   overlay = new Button.from_icon_name ("list-add-symbolic") {
-                       halign = Gtk.Align.END, valign = Gtk.Align.END,
-                       margins = { 0, 0, 20, 0 },
-                       expand = { true, false },
-                       css_classes = { "fill", "circular", "suggested-action", "filter-icon" },
-                       on_click = () => {
-                           new Dialog () {
-                               title = "new dialog",
-                               content_size = { 600, 500 },
-                               content = new ToolBar () {
-                                   top_bar = new HeaderBar (),
-                                   content = new VBox () {
-                                       valign = Gtk.Align.CENTER,
-                                       content = {
-                                           new Label ("TESTE") {
-                                               css_classes = { "title-1" }
-                                           }
-                                       }
-                                   }
-                               }
-                           };
-                       }
-                   }
-        };
+            derived = new Overlay () {
+                expand = { true, true },
+                content = new ScrolledBox () {
+                    content = new VBox () {
+                        spacing = 20,
+                        content = {
+                            new Button () {
+                                on_click = () => {
+                                    new AlertDialog ("Hey it's a dialog!", "This is just a presentaion") {
+                                        content = new VBox () {
+                                            content = {
+                                                new LockIcon (),
+                                                new Entry ("Type your password") {
+                                                    string_buffer = (text) => StringBuffer = text
+                                                }
+                                            },
+                                            expand = { true, true }
+                                        },
+                                        action = { "Try me." },
+                                        action_suggested = "Close window",
+                                        action_destructive = "Cancel",
+                                        // on_response = (response) => string2 = response
+                                    };
+                                }
+                            },
+                            new Button (),
+                            new Button (),
+                            new Button (),
+                            new Button () {
+                                on_click = () => print (StringBuffer)
+                            },
+                        }
+                    }
+                },
+                overlay = new Button.from_icon_name ("list-add-symbolic") {
+                    halign = Gtk.Align.END, valign = Gtk.Align.END,
+                    margins = { 0, 0, 20, 0 },
+                    expand = { true, false },
+                    css_classes = { "fill", "circular", "suggested-action", "filter-icon" },
+                    on_click = () => {
+                        new Dialog () {
+                            title = "new dialog",
+                            content_size = { 600, 500 },
+                            content = new ToolBar () {
+                                top_bar = new HeaderBar (),
+                                content = new VBox () {
+                                    valign = Gtk.Align.CENTER,
+                                    content = {
+                                        new Label ("TESTE") {
+                                            css_classes = { "title-1" }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                    }
+                }
+            };
+        }
     }
 
     public Window MainWindow (Adw.Application app) {
@@ -183,7 +183,7 @@ namespace Demo {
                                    valign = Gtk.Align.FILL,
                                    expand = { true, true },
                                    margins = { 0, 20, 0, 20 },
-                                   content = { title_box, over () },
+                                   content = { title_box, new OverlayClass () },
                                }
                            }
                        }

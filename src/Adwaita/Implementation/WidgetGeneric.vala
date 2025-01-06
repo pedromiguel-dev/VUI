@@ -4,6 +4,7 @@ namespace Vui.Impl {
         public virtual Generic<Gtk.Widget> derived {
             set {
                 this.widget = value.widget;
+                this.title = value.title;
             }
         }
     }
