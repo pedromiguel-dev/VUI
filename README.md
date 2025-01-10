@@ -1,6 +1,6 @@
 # Vui
 
-Vui is a project written primarily in Vala, with additional components in Meson, Shell, and CSS. It aims to provide a robust and efficient solution for bulding delcative ui with vala, gtk and libadwaita.
+Vui is a project for vala to provide a robust and efficient solution for bulding delcative ui with gtk and libadwaita.
 
 ## Build and run
 
