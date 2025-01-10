@@ -1,18 +1,19 @@
 public class Vui.Widget.App : Adw.Application {
 
     public static string id;
-    public static Gtk.Window window;
+    public static Vui.Widget.Window window;
 
     protected delegate Vui.Widget.Window AppWindowAction (Adw.Application app);
 
     public unowned AppWindowAction? content {
         set {
             this.activate.connect (() => {
-                window = this.active_window;
-                if (window == null) {
-                    window = value (this).widget;
+                var win = this.active_window;
+                if (win == null) {
+                    window = value (this);
+                    win = window;
                 }
-                window.present ();
+                win.present ();
             });
         }
     }
@@ -22,10 +23,8 @@ public class Vui.Widget.App : Adw.Application {
     }
 
     public override void startup () {
-        Vui.init ();
+        Vui.init (this.get_application_id ());
         base.startup ();
-        if (Vui.Impl.Generic.gsettings == null)
-            Vui.Impl.Generic.gsettings = new GLib.Settings (this.get_application_id ());
     }
 
     public App (string id) {

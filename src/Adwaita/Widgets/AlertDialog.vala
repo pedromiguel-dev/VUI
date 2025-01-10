@@ -1,28 +1,16 @@
 namespace Vui.Widget {
 
-    public struct AlertDialogAction {
-        string name;
-        Adw.ResponseAppearance style;
-    }
+    public class AlertDialog : Vui.Impl.Subclass<Adw.AlertDialog> {
 
-    public class AlertDialog : Vui.Impl.Generic<Adw.AlertDialog> {
+        protected delegate void on_response (string response);
 
-        protected delegate void OnResponse (unowned string response);
-
-        public unowned OnResponse? on_response {
+        public unowned on_response? response {
             set {
                 this.widget.response.connect ((res) => value (res));
             }
         }
 
-        public AlertDialogAction action {
-            set {
-                widget.add_response (value.name.ascii_down (), value.name);
-                widget.set_response_appearance (value.name.ascii_down (), value.style);
-            }
-        }
-
-        public string action_default {
+        public string action {
             set {
                 widget.add_response (value.ascii_down (), value);
                 widget.set_response_appearance (value.ascii_down (), Adw.ResponseAppearance.DEFAULT);
@@ -42,16 +30,16 @@ namespace Vui.Widget {
             }
         }
 
-        public Vui.Impl.Generic content {
+        public Gtk.Widget content {
             set {
-                widget.set_extra_child (value.gtk_widget);
+                Vui.Impl.BoubleDestination (value, this);
+                widget.set_extra_child (value);
             }
         }
 
         public AlertDialog (string title, string description) {
             widget = new Adw.AlertDialog (title, description);
             widget.present (Vui.Widget.App.window);
-            widget.show ();
         }
     }
 }

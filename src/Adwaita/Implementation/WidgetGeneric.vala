@@ -1,23 +1,36 @@
 namespace Vui.Impl {
 
-    public abstract class Derived : Generic<Gtk.Widget> {
-        public virtual Generic<Gtk.Widget> derived {
+    private void BoubleDestination (Gtk.Widget value, Logistics parent) {
+        Logistics b = (value is  Logistics) ? (Logistics) value : null;
+        if (b != null && b.destination != null)
+            parent.destination = b.destination;
+    }
+
+    protected interface Logistics : GLib.Object {
+        public abstract string title {
+            set; get; default = null;
+        }
+        public abstract Subclass[] destination {
+            set; get; default = null;
+        }
+    }
+
+    public abstract class Derived : Subclass<Gtk.Widget> {
+        public Gtk.Widget derived {
             set {
-                this.widget = value.widget;
-                this.title = value.title;
+                widget = value;
+                this.child = widget;
+
+                Logistics b = (Logistics) value;
+                if (b != null) {
+                    this.destination = b.destination;
+                    this.title = b.title;
+                }
             }
         }
     }
 
-    public abstract class Generic<G>: GLib.Object {
-
-        public static Vui.Widget.App app { get { return app; } set { app = value; } }
-        public static SimpleActionGroup simple_action_group = new SimpleActionGroup ();
-        public static GLib.Settings gsettings;
-
-        public virtual void save (string key, Gtk.Widget widget, string property, GLib.SettingsBindFlags flag) {
-            Vui.Impl.Generic.gsettings.bind (key, widget, property, flag);
-        }
+    public abstract class Subclass<G>: Adw.Bin, Logistics {
 
         public virtual G widget { get; set; }
 
@@ -26,64 +39,60 @@ namespace Vui.Impl {
             set { widget = value; }
         }
 
-        public string? title {
+        public override string title {
+            set; get; default = null;
+        }
+        public override Subclass[] destination {
             set; get; default = null;
         }
 
-        public Vui.Impl.Generic[] ? destination {
-            set; get; default = null;
-        }
-
-        public bool[] expand {
-            set {
-                gtk_widget.set_vexpand (value[0]);
-                gtk_widget.set_hexpand (value[1]);
-            }
-        }
-        public bool vexpand {
+        public new bool vexpand {
             get { return gtk_widget.get_vexpand (); }
-            set { gtk_widget.set_vexpand (value); }
-        }
-        public bool hexpand {
-            get { return gtk_widget.get_hexpand (); }
-            set { gtk_widget.set_hexpand (value); }
-        }
-        public Gtk.Align valign {
-            get { return gtk_widget.valign; }
-            set { gtk_widget.set_valign (value); }
-        }
-        public Gtk.Align halign {
-            get { return gtk_widget.halign; }
-            set { gtk_widget.set_halign (value); }
-        }
-
-        public int[] margins {
             set {
-                gtk_widget.margin_top = value[0];
-                gtk_widget.margin_start = value[1];
-                gtk_widget.margin_bottom = value[2];
-                gtk_widget.margin_end = value[3];
+                this.set_vexpand (value);
+                gtk_widget.set_vexpand (value);
+            }
+        }
+        public new bool hexpand {
+            get { return gtk_widget.get_hexpand (); }
+            set {
+                this.set_hexpand (value);
+                gtk_widget.set_hexpand (value);
+            }
+        }
+        public new Gtk.Align valign {
+            get { return gtk_widget.valign; }
+            set {
+                this.set_valign (value);
+                gtk_widget.set_valign (value);
+            }
+        }
+        public new Gtk.Align halign {
+            get { return gtk_widget.halign; }
+            set {
+                this.set_halign (value);
+                gtk_widget.set_halign (value);
             }
         }
 
-        public int margin_top {
+        public new int margin_top {
             get { return gtk_widget.margin_top; }
             set { gtk_widget.margin_top = value; }
         }
-        public int margin_left {
+        public new int margin_start {
             get { return gtk_widget.margin_start; }
             set { gtk_widget.margin_start = value; }
         }
-        public int margin_bottom {
+        public new int margin_bottom {
             get { return gtk_widget.margin_bottom; }
             set { gtk_widget.margin_bottom = value; }
         }
-        public int margin_right {
+        public new int margin_end {
             get { return gtk_widget.margin_end; }
             set { gtk_widget.margin_end = value; }
         }
 
-        public string[] css_classes {
+        public new string[] css_classes {
             set {
                 foreach (var item in value) {
                     gtk_widget.add_css_class (item);
@@ -91,7 +100,7 @@ namespace Vui.Impl {
             }
         }
 
-        public int height_request {
+        public new int height_request {
             get { return gtk_widget.height_request; }
             set { gtk_widget.height_request = value; }
         }

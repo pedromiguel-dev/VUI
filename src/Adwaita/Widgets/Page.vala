@@ -1,21 +1,24 @@
 namespace Vui.Widget {
-    public class Page : Vui.Impl.Generic<Adw.NavigationPage> {
+    public class Page : Adw.NavigationPage, Vui.Impl.Logistics {
 
-        public bool can_pop  {
-            set {
-                widget.set_can_pop (value);
-            }
+        public override string title {
+            set; get; default = null;
         }
 
-        public Vui.Impl.Generic content {
+        public override Vui.Impl.Subclass[] destination {
+            set; get; default = null;
+        }
+
+        public Gtk.Widget content {
             set {
-                widget.set_child (value.gtk_widget);
+                Vui.Impl.BoubleDestination (value, this);
+                this.set_child (value);
             }
         }
 
         public Page (string title) {
-            widget = new Adw.NavigationPage (new Gtk.Box (Gtk.Orientation.VERTICAL, 0), title);
-            widget.set_tag (title);
+            this.set_tag (title);
+            this.set_title (title);
         }
     }
 }

@@ -1,13 +1,24 @@
 namespace Vui {
+
+    public static Vui.Widget.App app;
+    public static SimpleActionGroup simple_action_group;
+    protected static GLib.Settings gsettings;
     private static bool initialized = false;
     private static Gtk.CssProvider? base_provider = null;
     private static Gtk.CssProvider? dark_provider = null;
     private static Gtk.CssProvider? app_provider = null;
 
-    public void init () {
+    public void save (string key, Gtk.Widget widget, string property, GLib.SettingsBindFlags flag) {
+        Vui.gsettings.bind (key, widget, property, flag);
+    }
+
+    public void init (string app_id) {
         if (initialized) {
             return;
         }
+        if (Vui.gsettings == null)
+            Vui.gsettings = new GLib.Settings (app_id);
+        Vui.simple_action_group = new SimpleActionGroup ();
 
         unowned var display_manager = Gdk.DisplayManager.@get ();
         display_manager.display_opened.connect (register_display);

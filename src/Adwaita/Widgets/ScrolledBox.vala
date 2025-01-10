@@ -1,4 +1,4 @@
-public class ScrolledBox : Vui.Impl.Generic<Gtk.ScrolledWindow>  {
+public class ScrolledBox : Vui.Impl.Subclass<Gtk.ScrolledWindow> {
 
     public Gtk.PolicyType vscroll_policy {
         set {
@@ -12,13 +12,15 @@ public class ScrolledBox : Vui.Impl.Generic<Gtk.ScrolledWindow>  {
         }
     }
 
-    public Vui.Impl.Generic content {
+    public Gtk.Widget content {
         set {
-            widget.set_child (value.gtk_widget);
+            Vui.Impl.BoubleDestination (value, this);
+            this.set_child (value);
         }
     }
 
     public ScrolledBox () {
         widget = new Gtk.ScrolledWindow ();
+        this.child = widget;
     }
 }

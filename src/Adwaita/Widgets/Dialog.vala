@@ -1,4 +1,4 @@
-public class Vui.Widget.Dialog : Vui.Impl.Generic<Adw.Dialog> {
+public class Vui.Widget.Dialog : Vui.Impl.Subclass<Adw.Dialog> {
 
     public int[] content_size {
         set {
@@ -13,20 +13,17 @@ public class Vui.Widget.Dialog : Vui.Impl.Generic<Adw.Dialog> {
         }
     }
 
-    public Vui.Impl.Generic content {
+    public Gtk.Widget content {
         set {
-            widget.set_child (value.gtk_widget);
+            widget.set_child (value);
         }
     }
 
     public Dialog () {
-        var content = new VBox ();
         widget = new Adw.Dialog () {
-            child = content.gtk_widget,
             content_width = 600,
             content_height = 550
         };
         widget.present (Vui.Widget.App.window);
-        widget.show ();
     }
 }

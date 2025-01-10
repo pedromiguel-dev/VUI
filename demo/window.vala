@@ -19,31 +19,48 @@
  */
 
 using Vui.Widget;
+using Vui.Model;
+using Vui.Impl;
 
 namespace Demo {
-    public class LockIcon : Vui.Impl.Derived {
-        public LockIcon () {
-            derived = new VBox () {
-                content = {
-                    new Image.from_icon_name ("system-lock-screen-symbolic") {
-                        pixel_size = 32,
-                        halign = Gtk.Align.CENTER,
-                        css_classes = { "lock-icon-image-invert" }
+    public class Home : Derived {
+        construct {
+            derived = new Navigation () {
+                pages = {
+                    new ToolBar () {
+                        title = "Home",
+                        top_bar = new HeaderBar (),
+                        content = new VBox () {
+                            spacing = 10,
+                            valign = Gtk.Align.FILL,
+                            vexpand = true,
+                            hexpand = true,
+                            margin_end = 20,
+                            margin_start = 20,
+                            content = {
+                                new HBox () {
+                                    content = {
+                                        new Label ("Journal") {
+                                            css_classes = { "title-1", "title-bigger" },
+                                            halign = Gtk.Align.START,
+                                            valign = Gtk.Align.CENTER,
+                                        }
+                                    }
+                                },
+                                new Overlay ()
+                            },
+                        }
                     }
-                },
-                css_classes = { "lock-icon" },
-                halign = Gtk.Align.CENTER,
-                spacing = 10
+                }
             };
         }
     }
 
-    public class OverlayClass : Vui.Impl.Derived {
+    public class Overlay : Derived {
         construct {
-            var StringBuffer = "";
-
-            derived = new Overlay () {
-                expand = { true, true },
+            derived = new Vui.Widget.Overlay () {
+                hexpand = true,
+                vexpand = true,
                 content = new ScrolledBox () {
                     content = new VBox () {
                         spacing = 20,
@@ -53,33 +70,36 @@ namespace Demo {
                                     new AlertDialog ("Hey it's a dialog!", "This is just a presentaion") {
                                         content = new VBox () {
                                             content = {
-                                                new LockIcon (),
-                                                new Entry ("Type your password") {
-                                                    string_buffer = (text) => StringBuffer = text
-                                                }
+                                                new Entry ("Type your password")
                                             },
-                                            expand = { true, true }
+                                            hexpand = true,
+                                            vexpand = true
                                         },
-                                        action = { "Try me." },
+                                        action = "Try me.",
                                         action_suggested = "Close window",
                                         action_destructive = "Cancel",
-                                        // on_response = (response) => string2 = response
                                     };
                                 }
                             },
                             new Button (),
                             new Button (),
                             new Button (),
-                            new Button () {
-                                on_click = () => print (StringBuffer)
+                            new Button (),
+                            new PageLink (new StateScreen ()) {
+                                trigger = new Label ("third screen"),
+                                halign = Gtk.Align.END,
+                                valign = Gtk.Align.CENTER,
+                                hexpand = true,
                             },
                         }
                     }
                 },
                 overlay = new Button.from_icon_name ("list-add-symbolic") {
-                    halign = Gtk.Align.END, valign = Gtk.Align.END,
-                    margins = { 0, 0, 20, 0 },
-                    expand = { true, false },
+                    halign = Gtk.Align.END,
+                    valign = Gtk.Align.END,
+                    margin_bottom = 20,
+                    hexpand = true,
+                    vexpand = true,
                     css_classes = { "fill", "circular", "suggested-action", "filter-icon" },
                     on_click = () => {
                         new Dialog () {
@@ -103,91 +123,38 @@ namespace Demo {
         }
     }
 
-    public Window MainWindow (Adw.Application app) {
+    public class StateScreen : Derived {
+        private Store<string> state = new Store<string> ("Default value");
 
-        var second_screen = new ToolBar () {
-            title = "Second",
-            top_bar = new HeaderBar (),
-            content = new VBox () {
-                spacing = 10,
-                valign = Gtk.Align.FILL,
-                expand = { true, true },
-                margins = { 0, 20, 0, 20 },
-                content = {
-                    new VBox () {
-                        valign = Gtk.Align.CENTER,
-                        content = {
-                            new Label ("TESTE") {
-                                css_classes = { "title-1" }
+        construct {
+            derived = new ToolBar () {
+                title = "Reacting to changes",
+                top_bar = new HeaderBar (),
+                content = new VBox () {
+                    spacing = 10,
+                    valign = Gtk.Align.FILL,
+                    vexpand = true,
+                    hexpand = true,
+                    margin_end = 20,
+                    margin_start = 20,
+                    content = {
+                        new VBox () {
+                            valign = Gtk.Align.CENTER,
+                            vexpand = true,
+                            content = {
+                                new Label.ref (state) {
+                                    css_classes = { "title-1" },
+                                    margin_bottom = 30,
+                                    wrap = true,
+                                },
+                                new Entry ("Type your password") {
+                                    string_buffer = (text) => state.state = text
+                                },
                             }
                         }
-                    }
-                },
-            }
-        };
-
-        var third_screen = new ToolBar () {
-            title = "Tird screen",
-            top_bar = new HeaderBar (),
-            content = new VBox () {
-                spacing = 10,
-                valign = Gtk.Align.FILL,
-                expand = { true, true },
-                margins = { 0, 20, 0, 20 },
-                content = {
-                    new VBox () {
-                        valign = Gtk.Align.CENTER,
-                        content = {
-                            new Label ("3º Tela") {
-                                css_classes = { "title-1" }
-                            }
-                        }
-                    }
-                },
-            }
-        };
-
-        var title_box = new HBox () {
-            content = {
-                new Label ("Journal") {
-                    css_classes = { "title-1", "title-bigger" },
-                    halign = Gtk.Align.START,
-                    valign = Gtk.Align.CENTER,
-                },
-                new PageLink (second_screen) {
-                    trigger = new Label ("Hey"),
-                    halign = Gtk.Align.END,
-                    valign = Gtk.Align.CENTER,
-                    hexpand = true,
-                },
-                new PageLink (third_screen) {
-                    trigger = new Label ("third screen"),
-                    halign = Gtk.Align.END,
-                    valign = Gtk.Align.CENTER,
-                    hexpand = true,
+                    },
                 }
-            }
-        };
-
-        return new Window (app) {
-                   content = new Navigation () {
-                       pages = {
-                           new ToolBar () {
-                               title = "Home",
-                               top_bar = new HeaderBar () {
-                                   show_back_button = false,
-                                   show_title = false,
-                               },
-                               content = new VBox () {
-                                   spacing = 10,
-                                   valign = Gtk.Align.FILL,
-                                   expand = { true, true },
-                                   margins = { 0, 20, 0, 20 },
-                                   content = { title_box, new OverlayClass () },
-                               }
-                           }
-                       }
-                   }
-        };
+            };
+        }
     }
 }

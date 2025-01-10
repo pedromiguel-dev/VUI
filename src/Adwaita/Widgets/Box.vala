@@ -1,15 +1,19 @@
-public class Vui.Widget.HBox : Vui.Impl.Generic<Gtk.Box> {
+protected class Vui.Widget.Box : Gtk.Box, Vui.Impl.Logistics {
 
-    Vui.Impl.Generic[] concatenate_arrays(Vui.Impl.Generic[] array1, Vui.Impl.Generic[] array2) {
-        // Create a new array with combined length
-        Vui.Impl.Generic[] combined_array = new Vui.Impl.Generic[array1.length + array2.length];
+    public override string title {
+        set; get; default = null;
+    }
+    public override Vui.Impl.Subclass[] destination {
+        set; get; default = null;
+    }
 
-        // Copy elements from array1
+    private Vui.Impl.Subclass[] concatenate_arrays (Vui.Impl.Subclass[] array1, Vui.Impl.Subclass[] array2) {
+        Vui.Impl.Subclass[] combined_array = new Vui.Impl.Subclass[array1.length + array2.length];
+
         for (int i = 0; i < array1.length; i++) {
             combined_array[i] = array1[i];
         }
 
-        // Copy elements from array2
         for (int i = 0; i < array2.length; i++) {
             combined_array[array1.length + i] = array2[i];
         }
@@ -17,50 +21,28 @@ public class Vui.Widget.HBox : Vui.Impl.Generic<Gtk.Box> {
         return combined_array;
     }
 
-    public Vui.Impl.Generic[] ? content {
+    public Gtk.Widget[] content {
         set {
-            if (value != null)
-                foreach (var child in value) {
-                    if (child.destination != null)
-                        this.destination = concatenate_arrays(this.destination, child.destination);
-                    widget.append(child.gtk_widget);
-                }
-            ;
-        }
-    }
+            foreach (Gtk.Widget child in value) {
 
-    public int spacing {
-        set {
-            widget.set_spacing(value);
-        }
-    }
+                Vui.Impl.Logistics b = (child is  Vui.Impl.Logistics) ? (Vui.Impl.Logistics) child : null;
+                if (b != null && b.destination != null)
+                    this.destination = concatenate_arrays (this.destination, b.destination);
 
-    public HBox() {
-        widget = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+                this.append (child);
+            }
+        }
     }
 }
 
-public class Vui.Widget.VBox : Vui.Impl.Generic<Gtk.Box> {
-
-    public Vui.Impl.Generic[] ? content {
-        set {
-            if (value != null)
-                foreach (var child in value) {
-                    if (child.destination != null)
-                        this.destination = child.destination;
-                    widget.append(child.gtk_widget);
-                }
-            ;
-        }
+public class Vui.Widget.HBox : Vui.Widget.Box {
+    public HBox () {
+        Object (orientation: Gtk.Orientation.HORIZONTAL, spacing: 0);
     }
+}
 
-    public int spacing {
-        set {
-            widget.set_spacing(value);
-        }
-    }
-
-    public VBox() {
-        widget = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+public class Vui.Widget.VBox : Vui.Widget.Box {
+    public VBox () {
+        Object (orientation: Gtk.Orientation.VERTICAL, spacing: 0);
     }
 }

@@ -1,18 +1,21 @@
-public class Vui.Widget.Overlay : Vui.Impl.Generic<Gtk.Overlay> {
+public class Vui.Widget.Overlay : Vui.Impl.Subclass<Gtk.Overlay> {
 
-    public Vui.Impl.Generic overlay {
+    public Gtk.Widget overlay {
         set {
-            widget.add_overlay (value.gtk_widget);
+            Vui.Impl.BoubleDestination (value, this);
+            widget.add_overlay (value);
         }
     }
 
-    public Vui.Impl.Generic content {
+    public Gtk.Widget content {
         set {
-            widget.set_child (value.gtk_widget);
+            Vui.Impl.BoubleDestination (value, this);
+            widget.set_child (value);
         }
     }
 
     public Overlay () {
         widget = new Gtk.Overlay ();
+        this.child = widget;
     }
 }
