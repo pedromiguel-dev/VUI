@@ -1,16 +1,10 @@
-protected delegate string Vui.Widget.label_string_callback ();
 
-public class Vui.Widget.Label : Vui.Impl.Generic<Gtk.Label> {
-
-    public unowned label_string_callback? on_update {
-        set {
-            widget.label = value ();
-        }
-    }
+public class Vui.Widget.Label : Vui.Impl.Subclass<Gtk.Label> {
 
     public bool wrap {
         set {
             widget.set_wrap (value);
+            widget.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
         }
     }
 
@@ -26,15 +20,17 @@ public class Vui.Widget.Label : Vui.Impl.Generic<Gtk.Label> {
         }
     }
 
-    public Label.ref (/**callback_string ? on_update = null, Vui.Model.Store ? state = null**/) {
-        // widget = new Gtk.Label (on_update ());
-        // if (state != null)
-        // state.changed.connect (() => {
-        // widget.label = on_update ();
-        // });
+    public Label.ref (Vui.Model.Store<string> state) {
+        widget = new Gtk.Label (state.state);
+        if (state != null)
+            state.changed.connect ((text) => {
+                widget.label = text;
+            });
+        this.child = widget;
     }
 
     public Label (string label) {
         widget = new Gtk.Label (label);
+        this.child = widget;
     }
 }

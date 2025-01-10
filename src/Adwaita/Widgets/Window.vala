@@ -1,31 +1,26 @@
+public class Vui.Widget.Window : Adw.ApplicationWindow, Vui.Impl.Logistics {
 
-protected delegate void Vui.Widget.window_handle_callback<T> (T this_);
+    public override string title { get; set; }
 
-public class Vui.Widget.Window : Vui.Impl.Generic<Adw.ApplicationWindow> {
+    public override Vui.Impl.Subclass[] destination { get; set; }
 
-    public Vui.Impl.Generic content {
+    public new Gtk.Widget content {
         set {
-            widget.set_content (value.gtk_widget);
+            this.set_content (value);
         }
-    }
-
-
-    public Window bind (window_handle_callback<Window?> handle) {
-        handle (this);
-        return this;
     }
 
     public Window handle () {
         var handle = new Gtk.WindowHandle ();
-        handle.child = this.widget.child;
-        widget.set_child (handle);
+        handle.child = this.child;
+        this.set_child (handle);
 
         return this;
     }
 
     public Window (owned Adw.Application app) {
-        widget = new Adw.ApplicationWindow (app);
-        save ("width", this.widget, "default-width", SettingsBindFlags.DEFAULT);
-        save ("height", this.widget, "default-height", SettingsBindFlags.DEFAULT);
+        Object (application: app);
+        save ("width", this, "default-width", SettingsBindFlags.DEFAULT);
+        save ("height", this, "default-height", SettingsBindFlags.DEFAULT);
     }
 }

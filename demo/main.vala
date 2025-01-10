@@ -19,10 +19,11 @@
  */
 
 using Vui.Widget;
-
 int main (string[] args) {
-	var app = new App ("io.github.pedromigueldev.vui") {
-		content = (app) => Demo.MainWindow(app)
-	};
-    return app.run(args) ;
+    var app = new App ("io.github.pedromigueldev.vui") {
+        content = (app) => new Vui.Widget.Window (app) {
+            content = new Demo.Home ()
+        }
+    };
+    return app.run (args);
 }
