@@ -10,12 +10,14 @@ public class Vui.Widget.ToolBar : Vui.Impl.Subclass<Adw.ToolbarView> {
             widget.add_top_bar (value);
         }
     }
+
     public Gtk.Widget bottom_bar {
         set {
             Vui.Impl.BoubleDestination (value, this);
             widget.add_bottom_bar (value);
         }
     }
+
     public Gtk.Widget content {
         set {
             Vui.Impl.BoubleDestination (value, this);
@@ -48,7 +50,6 @@ public class Vui.Widget.ToolBar : Vui.Impl.Subclass<Adw.ToolbarView> {
                     new Vui.Widget.HSpacer ()
                 }
             };
-
             this.content_box.prepend (title_page_box);
         }
     }
@@ -57,14 +58,17 @@ public class Vui.Widget.ToolBar : Vui.Impl.Subclass<Adw.ToolbarView> {
         get { return this.content_box.margin_top; }
         set { this.content_box.margin_top = value; }
     }
+
     public new int margin_start {
         get { return this.content_box.margin_start; }
         set { this.content_box.margin_start = value; }
     }
+
     public new int margin_bottom {
         get { return this.content_box.margin_bottom; }
         set { this.content_box.margin_bottom = value; }
     }
+
     public new int margin_end {
         get { return this.content_box.margin_end; }
         set { this.content_box.margin_end = value; }
@@ -73,6 +77,7 @@ public class Vui.Widget.ToolBar : Vui.Impl.Subclass<Adw.ToolbarView> {
     public ToolBar () {
         widget = new Adw.ToolbarView ();
         content_box = new VBox () {
+
             valign = Gtk.Align.FILL,
             halign = Gtk.Align.FILL,
         };
