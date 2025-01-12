@@ -15,23 +15,32 @@ namespace Vui.Widget {
 
         public new Entry[] content {
             set {
-                foreach (var child in value) {
-                    this.destination = concatenate_arrays (this.destination, child.destination);
-                    child.widget.add_css_class ("vui-section-entry");
 
-                    var temp = new Gtk.ListBoxRow () {
+                foreach (var entry in value) {
+                    var click_controller = new Gtk.GestureClick ();
+                    var focus_controller = new Gtk.EventControllerFocus ();
+                    var row = new Gtk.ListBoxRow () {
+                        child = entry,
                         focusable = false,
-                        child = child
                     };
+                    entry.set_focusable (false);
+                    entry.add_controller (click_controller);
+                    entry.widget.add_controller (focus_controller);
+                    entry.widget.add_css_class ("vui-section-entry");
 
-                    this.box_list.append (temp);
+                    click_controller.pressed.connect (() => entry.widget.focus (Gtk.DirectionType.DOWN));
+                    focus_controller.enter.connect (() => row.add_css_class ("vui-section-row-focused"));
+                    focus_controller.leave.connect (() => row.remove_css_class ("vui-section-row-focused"));
+
+                    this.destination = concatenate_arrays (this.destination, entry.destination);
+                    this.box_list.append (row);
                 }
-                Entry first = (Entry) this.box_list.get_first_child ().get_first_child ();
+                Gtk.ListBoxRow first = (Gtk.ListBoxRow) this.box_list.get_first_child ();
                 if (value.length > 1) {
-                    Entry last = (Entry) this.box_list.get_last_child ().get_first_child ();
-                    first.widget.add_css_class ("vui-section-entry-first");
-                    last.widget.add_css_class ("vui-section-entry-last");
-                } else first.widget.add_css_class ("vui-section-entry-solo");
+                    Gtk.ListBoxRow last = (Gtk.ListBoxRow) this.box_list.get_last_child ();
+                    first.add_css_class ("vui-section-row-first");
+                    last.add_css_class ("vui-section-row-last");
+                } else first.add_css_class ("vui-section-row-solo");
             }
         }
 
@@ -48,8 +57,7 @@ namespace Vui.Widget {
     }
 
     public class Entry : Vui.Impl.Subclass<Gtk.Entry> {
-
-        public delegate void srting_buffer_callback (string text);
+        private Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 
         public Vui.Model.Store<string> bind_buffer {
             set {
@@ -57,15 +65,32 @@ namespace Vui.Widget {
             }
         }
 
+        public Vui.Widget.Button append {
+            set {
+                value.css_classes = { "flat" };
+                value.halign = Gtk.Align.CENTER;
+                value.valign = Gtk.Align.CENTER;
+                this.box.append (value);
+            }
+        }
+
         public Entry (string placeholder) {
             widget = new Gtk.Entry ();
+            box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10) {
+                margin_start = 3,
+                margin_end = 5,
+                margin_top = 3,
+                margin_bottom = 3
+            };
+
             this.widget.set_placeholder_text (placeholder);
-            this.child = widget;
+            this.box.append (widget);
+
+            this.child = box;
         }
     }
 
     public class DatePicker : Entry {
-
 
         public DatePicker (string placeholder) {
             base (placeholder);
