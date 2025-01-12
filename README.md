@@ -4,7 +4,7 @@ Vui is a project for vala to provide a robust and efficient solution for bulding
 
 ## Build and run
 
-To build and run vui, follow these steps:
+To build and run the demo, follow these steps:
  ```bash
  git clone https://github.com/pedromigueldev/Vui.git
  cd Vui
@@ -13,7 +13,7 @@ To build and run vui, follow these steps:
    ```
    
 ## Installing
-To install vui, just run the install.sh:
+To install the vui library, just run the install.sh:
  ```bash
  git clone https://github.com/pedromigueldev/Vui.git
  cd Vui
