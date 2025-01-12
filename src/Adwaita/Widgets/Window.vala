@@ -1,8 +1,8 @@
 public class Vui.Widget.Window : Adw.ApplicationWindow, Vui.Impl.Logistics {
 
-    public override string title { get; set; }
+    private override string title { get; set; }
 
-    public override Vui.Impl.Subclass[] destination { get; set; }
+    private override Vui.Impl.Subclass[] destination { get; set; }
 
     public new Gtk.Widget content {
         set {

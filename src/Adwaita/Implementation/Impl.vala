@@ -42,6 +42,7 @@ namespace Vui.Impl {
         public override string title {
             set; get; default = null;
         }
+
         public override Subclass[] destination {
             set; get; default = null;
         }

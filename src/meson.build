@@ -1,6 +1,7 @@
 sources = [
   'Init.vala',
-  'Adwaita' / 'Implementation' / 'WidgetGeneric.vala',
+  'Adwaita' / 'Implementation' / 'Flow.vala',
+  'Adwaita' / 'Implementation' / 'Impl.vala',
   'Adwaita' / 'Model' / 'Store.vala',
   'Adwaita' / 'Widgets' / 'AlertDialog.vala',
   'Adwaita' / 'Widgets' / 'Application.vala',
