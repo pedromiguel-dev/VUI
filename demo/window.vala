@@ -199,7 +199,10 @@ namespace Demo {
                                         },
                                         new Entry ("Last Name") {
                                             hexpand = true,
-                                        }
+                                        },
+                                        new DatePicker ("Birthday") {
+                                            hexpand = true,
+                                        },
                                     }
                                 },
                                 new Section () {

@@ -23,7 +23,7 @@
 .vui-section-entry {
     background-color: white;
     outline-offset: 1px;
-    border-radius: 0;
+    border-radius: 0px;
 }
 
 .vui-section-entry-first {
@@ -32,4 +32,8 @@
 
 .vui-section-entry-last {
     border-radius: 0 0 10px 10px;
+}
+
+.vui-section-entry-solo {
+    border-radius: 10px
 }

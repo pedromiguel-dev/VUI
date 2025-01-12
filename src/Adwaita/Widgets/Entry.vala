@@ -20,17 +20,18 @@ namespace Vui.Widget {
                     child.widget.add_css_class ("vui-section-entry");
 
                     var temp = new Gtk.ListBoxRow () {
-                        focusable = false
+                        focusable = false,
+                        child = child
                     };
-                    temp.child = child;
 
                     this.box_list.append (temp);
                 }
                 Entry first = (Entry) this.box_list.get_first_child ().get_first_child ();
-                first.widget.add_css_class ("vui-section-entry-first");
-                Entry last = (Entry) this.box_list.get_last_child ().get_first_child ();
-                last.widget.add_css_class ("vui-section-entry-last");
-                // this.box_list.get_last_child ().get_first_child ().widget.add_css_class ("vui-section-entry-last");
+                if (value.length > 1) {
+                    Entry last = (Entry) this.box_list.get_last_child ().get_first_child ();
+                    first.widget.add_css_class ("vui-section-entry-first");
+                    last.widget.add_css_class ("vui-section-entry-last");
+                } else first.widget.add_css_class ("vui-section-entry-solo");
             }
         }
 
@@ -60,6 +61,14 @@ namespace Vui.Widget {
             widget = new Gtk.Entry ();
             this.widget.set_placeholder_text (placeholder);
             this.child = widget;
+        }
+    }
+
+    public class DatePicker : Entry {
+
+
+        public DatePicker (string placeholder) {
+            base (placeholder);
         }
     }
 }
