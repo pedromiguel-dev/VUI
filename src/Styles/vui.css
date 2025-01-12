@@ -1,3 +1,7 @@
+.spacer {
+    background: none;
+}
+
 .nav_link {
     background: transparent;
     border: none;
@@ -12,7 +16,6 @@
 .round {
     border-radius: 100%;
 }
-
 
 .vui-section {
     background-color: white;

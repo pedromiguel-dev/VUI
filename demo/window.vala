@@ -29,27 +29,22 @@ namespace Demo {
             derived = new Navigation () {
                 pages = {
                     new ToolBar () {
-                        title = "Home",
+                        title_page = "Journal",
+                        margin_end = 20,
+                        margin_start = 20,
+                        title_append = {
+                            new Button.from_icon_name ("document-edit-symbolic") {
+                                css_classes = { "circular" }
+                            },
+                            new Button.from_icon_name ("view-more-horizontal-symbolic") {
+                                css_classes = { "circular" }
+                            }
+                        },
                         top_bar = new HeaderBar (),
                         content = new VBox () {
-                            spacing = 10,
-                            valign = Gtk.Align.FILL,
-                            vexpand = true,
-                            hexpand = true,
-                            margin_end = 20,
-                            margin_start = 20,
                             content = {
-                                new HBox () {
-                                    content = {
-                                        new Label ("Journal") {
-                                            css_classes = { "title-1", "title-bigger" },
-                                            halign = Gtk.Align.START,
-                                            valign = Gtk.Align.CENTER,
-                                        }
-                                    }
-                                },
                                 new Overlay ()
-                            },
+                            }
                         }
                     }
                 }
@@ -127,18 +122,18 @@ namespace Demo {
 
     public class StateScreen : Derived {
         private Store<string> state = new Store<string> ("There must be something here");
-        private Store<bool> state2 = new Store<bool> (false);
+        private Store<bool> state2 = new Store<bool> (true);
 
         construct {
             derived = new ToolBar () {
                 title = "Reacting to changes",
+                margin_end = 20,
+                margin_start = 20,
                 top_bar = new HeaderBar (),
                 content = new VBox () {
                     spacing = 10,
+                    vexpand = true,
                     valign = Gtk.Align.CENTER,
-                    halign = Gtk.Align.FILL,
-                    margin_end = 20,
-                    margin_start = 20,
                     content = {
                         new ShowIf (state2) {
                             content = {
@@ -171,24 +166,14 @@ namespace Demo {
 
     public class FormScreen : Derived {
 
-
         construct {
             derived = new ToolBar () {
-                title = "Form",
+                title_page = "Account",
+                margin_start = 20,
+                margin_end = 20,
                 top_bar = new HeaderBar (),
                 content = new VBox () {
-                    margin_start = 20,
-                    margin_end = 20,
                     content = {
-                        new HBox () {
-                            content = {
-                                new Label ("Account") {
-                                    css_classes = { "title-1", "title-bigger" },
-                                    halign = Gtk.Align.START,
-                                    valign = Gtk.Align.CENTER,
-                                }
-                            }
-                        },
                         new VBox () {
                             content = {
                                 new Section () {
