@@ -195,17 +195,12 @@ namespace Demo {
                                     header = "Personal Information",
                                     content = {
                                         new Entry ("First Name") {
-                                            hexpand = true,
                                             append = new Button.from_icon_name ("document-edit-symbolic") {
                                                 on_click = () => message ("button was clicked")
                                             }
                                         },
-                                        new Entry ("Last Name") {
-                                            hexpand = true,
-                                        },
-                                        new DatePicker ("Birthday") {
-                                            hexpand = true,
-                                        },
+                                        new Entry ("Last Name"),
+                                        new DatePicker ("Birthday"),
                                     }
                                 },
                                 new Section () {

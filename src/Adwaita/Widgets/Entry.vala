@@ -76,6 +76,7 @@ namespace Vui.Widget {
 
         public Entry (string placeholder) {
             widget = new Gtk.Entry ();
+            widget.set_hexpand (true);
             box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10) {
                 margin_start = 3,
                 margin_end = 5,
