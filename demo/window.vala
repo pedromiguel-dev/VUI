@@ -206,15 +206,9 @@ namespace Demo {
                                 new Section () {
                                     header = "Actions",
                                     content = {
-                                        new Entry ("Type your password") {
-                                            hexpand = true,
-                                        },
-                                        new Entry ("Type your password") {
-                                            hexpand = true,
-                                        },
-                                        new Entry ("Type your password") {
-                                            hexpand = true,
-                                        },
+                                        new Entry ("Type your password"),
+                                        new Entry ("Type your password"),
+                                        new Entry ("Type your password"),
                                     }
                                 }
                             }

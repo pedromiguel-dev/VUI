@@ -11,7 +11,6 @@ namespace Vui.Widget {
         public PageLink (owned Vui.Impl.Subclass destination) {
             base ();
             widget.css_classes = { "nav_link" };
-            this.child = widget;
             this.destination = { destination };
 
             this.on_click = () => {
