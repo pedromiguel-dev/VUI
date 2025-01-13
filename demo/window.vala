@@ -166,6 +166,8 @@ namespace Demo {
 
     public class FormScreen : Derived {
 
+        private Store<bool> toogle = new Store<bool> (false);
+
         construct {
             derived = new ToolBar () {
                 title_page = "Account",
@@ -176,8 +178,7 @@ namespace Demo {
                     content = {
                         new VBox () {
                             content = {
-                                new Section () {
-                                    header = "Personal Information",
+                                new Section ("Personal Information") {
                                     content = {
                                         new Entry ("First Name") {
                                             append = new Button.from_icon_name ("document-edit-symbolic") {
@@ -185,12 +186,11 @@ namespace Demo {
                                             }
                                         },
                                         new Entry ("Last Name"),
-                                        new DatePicker ("Birthday"),
                                     }
                                 },
-                                new Section () {
-                                    header = "Actions",
+                                new Section ("Actions") {
                                     content = {
+                                        new Toggle ("Birthday", toogle),
                                         new Entry ("Type your password"),
                                         new Entry ("Type your password"),
                                         new Entry ("Type your password"),
