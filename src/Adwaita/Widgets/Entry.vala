@@ -116,11 +116,13 @@ namespace Vui.Widget {
 
         public Toggle (string placeholder, Vui.Model.Store<bool> state) {
             base (placeholder);
+            this.toggle.set_can_target (false);
             this.widget.set_can_focus (false);
             this.widget.set_can_target (false);
             this.widget.set_text (placeholder);
 
             this.place_controller ();
+            
             this.box.append (toggle);
 
             this.toggle.state_set.connect ((value) => {
