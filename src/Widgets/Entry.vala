@@ -133,4 +133,53 @@ namespace Vui.Widget {
             });
         }
     }
+
+    public class SpinRow : EntryCommon {
+
+        private Gtk.Entry text = new Gtk.Entry () {
+            css_classes = {"vui-section-entry"},
+            input_purpose = Gtk.InputPurpose.NUMBER,
+            xalign = (float) 0.99,
+            text = "0"
+        };
+        private Gtk.Button button_plus = new Gtk.Button.from_icon_name ("plus-symbolic") {
+            css_classes = { "circular" },
+            halign = Gtk.Align.CENTER,
+            valign = Gtk.Align.CENTER
+        };
+        private Gtk.Button button_minus = new Gtk.Button.from_icon_name ("minus-symbolic") {
+            css_classes = { "circular" },
+            halign = Gtk.Align.CENTER,
+            valign = Gtk.Align.CENTER
+        };
+
+        private void build () {
+
+            this.box.append (text);
+            this.box.append (button_plus);
+            this.box.append (button_minus);
+        }
+
+        public SpinRow (string placeholder, owned Vui.Model.Store<int> state) {
+            base (placeholder);
+
+            this.widget.set_can_focus (false);
+            this.widget.set_can_target (false);
+            this.widget.set_text (placeholder);
+
+            state.changed.connect ((value) =>
+                this.text.set_text (value.to_string ())
+            );
+
+            this.button_plus.clicked.connect(() => {
+                state.state++;
+            });
+
+            this.button_minus.clicked.connect(() => {
+                state.state--;
+            });
+
+            this.build ();
+        }
+    }
 }

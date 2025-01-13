@@ -167,6 +167,7 @@ namespace Demo {
     public class FormScreen : Derived {
 
         private Store<bool> toogle = new Store<bool> (false);
+        private Store<int> spinrow = new Store<int> (0);
 
         construct {
             derived = new ToolBar () {
@@ -191,6 +192,7 @@ namespace Demo {
                                 new Section ("Actions") {
                                     content = {
                                         new Toggle ("Birthday", toogle),
+                                        new SpinRow ("Something is: ", spinrow),
                                         new Entry ("Type your password"),
                                     }
                                 }
