@@ -192,8 +192,6 @@ namespace Demo {
                                     content = {
                                         new Toggle ("Birthday", toogle),
                                         new Entry ("Type your password"),
-                                        new Entry ("Type your password"),
-                                        new Entry ("Type your password"),
                                     }
                                 }
                             }

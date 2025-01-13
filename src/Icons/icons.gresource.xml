@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/pedromigueldev/vui/icons">
+    <file compressed="true" preprocess="xml-stripblanks" alias="minus-symbolic.svg">scalable/minus-symbolic.svg</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="plus-symbolic.svg">scalable/plus-symbolic.svg</file>
+  </gresource>
+</gresources>

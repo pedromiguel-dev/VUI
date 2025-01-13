@@ -99,11 +99,13 @@ namespace Vui.Widget {
     }
 
     public class Toggle : EntryCommon {
+
         private Gtk.GestureClick click_controller = new Gtk.GestureClick ();
+
         private Gtk.Switch toggle = new Gtk.Switch () {
             css_classes = { "flat" },
             halign = Gtk.Align.CENTER,
-            valign = Gtk.Align.CENTER
+            valign = Gtk.Align.CENTER,
         };
 
         private void place_controller () {
@@ -114,7 +116,7 @@ namespace Vui.Widget {
             });
         }
 
-        public Toggle (string placeholder, Vui.Model.Store<bool> state) {
+        public Toggle (string placeholder, owned Vui.Model.Store<bool> state) {
             base (placeholder);
             this.toggle.set_can_target (false);
             this.widget.set_can_focus (false);
@@ -122,7 +124,7 @@ namespace Vui.Widget {
             this.widget.set_text (placeholder);
 
             this.place_controller ();
-            
+
             this.box.append (toggle);
 
             this.toggle.state_set.connect ((value) => {
