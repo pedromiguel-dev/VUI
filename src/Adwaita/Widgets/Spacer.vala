@@ -7,20 +7,20 @@ namespace Vui.Widget {
     }
     public class VSpacer : Vui.Impl.Subclass<Gtk.Separator> {
         public VSpacer () {
-            this.vexpand = true;
             widget = new Gtk.Separator (Gtk.Orientation.VERTICAL) {
                 css_classes = { "spacer" }
             };
             this.child = widget;
+            this.vexpand = true;
         }
     }
     public class HSpacer : Vui.Impl.Subclass<Gtk.Separator> {
         public HSpacer () {
-            this.hexpand = true;
             widget = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 css_classes = { "spacer" }
             };
             this.child = widget;
+            this.hexpand = true;
         }
     }
 }
