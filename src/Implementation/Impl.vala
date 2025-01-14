@@ -34,7 +34,7 @@ namespace Vui.Impl {
 
         public virtual G widget { get; set; }
 
-        public virtual Gtk.Widget gtk_widget {
+        private virtual Gtk.Widget gtk_widget {
             get { return (Gtk.Widget) widget; }
             set { widget = value; }
         }
