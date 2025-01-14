@@ -59,11 +59,10 @@ namespace Vui.Widget {
     }
 
     public abstract class EntryCommon : Vui.Impl.Subclass<Gtk.Entry> {
-        protected Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10) {
+        protected Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 8) {
             margin_start = 4,
             margin_end = 8,
-            margin_top = 4,
-            margin_bottom = 4
+            halign = Gtk.Align.END
         };
 
         public virtual Vui.Model.Store<string> bind_buffer {
@@ -74,7 +73,7 @@ namespace Vui.Widget {
 
         public virtual Vui.Widget.Button append {
             set {
-                value.css_classes = { "flat" };
+                value.css_classes = { "flat", "circular" };
                 value.halign = Gtk.Align.CENTER;
                 value.valign = Gtk.Align.CENTER;
                 this.box.append (value);
@@ -82,13 +81,17 @@ namespace Vui.Widget {
         }
 
         private EntryCommon (string placeholder) {
+            var overl = new Gtk.Overlay ();
+
             this.widget = new Gtk.Entry () {
-                hexpand = true,
-                placeholder_text = placeholder
+                placeholder_text = placeholder,
+                css_classes = { "vui-section-entry-text" }
             };
 
-            this.box.append (widget);
-            this.child = this.box;
+            overl.child = this.widget;
+            overl.add_overlay (this.box);
+
+            this.child = overl;
         }
     }
 
@@ -137,7 +140,9 @@ namespace Vui.Widget {
     public class SpinRow : EntryCommon {
 
         private Gtk.Entry text = new Gtk.Entry () {
-            css_classes = {"vui-section-entry"},
+            css_classes = { "vui-section-entry", "vui-section-spin-row-text" },
+            valign = Gtk.Align.CENTER,
+            vexpand = false,
             input_purpose = Gtk.InputPurpose.NUMBER,
             xalign = (float) 0.99,
             text = "0"
@@ -168,14 +173,14 @@ namespace Vui.Widget {
             this.widget.set_text (placeholder);
 
             state.changed.connect ((value) =>
-                this.text.set_text (value.to_string ())
+                                   this.text.set_text (value.to_string ())
             );
 
-            this.button_plus.clicked.connect(() => {
+            this.button_plus.clicked.connect (() => {
                 state.state++;
             });
 
-            this.button_minus.clicked.connect(() => {
+            this.button_minus.clicked.connect (() => {
                 state.state--;
             });
 

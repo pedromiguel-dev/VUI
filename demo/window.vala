@@ -53,6 +53,9 @@ namespace Demo {
     }
 
     public class Overlay : Derived {
+        private Store<int> intstate = new Store<int> (0);
+        private Store<bool> boolstate = new Store<bool> (false);
+
         construct {
             derived = new Vui.Widget.Overlay () {
                 hexpand = true,
@@ -65,8 +68,14 @@ namespace Demo {
                                 on_click = () => {
                                     new AlertDialog ("Hey it's a dialog!", "This is just a presentaion") {
                                         content = new VBox () {
+                                            spacing = 8,
                                             content = {
-                                                new Entry ("Type your password")
+                                                new Entry ("Vui Entry"),
+                                                new SpinRow ("SpinRow", intstate),
+                                                new Toggle ("Toggle", boolstate),
+                                                new Gtk.Entry () {
+                                                    placeholder_text = "Normal Entry"
+                                                }
                                             },
                                             hexpand = true,
                                             vexpand = true
