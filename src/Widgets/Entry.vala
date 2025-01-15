@@ -155,11 +155,13 @@ namespace Vui.Widget {
             xalign = (float) 0.99,
             text = "0"
         };
+
         private Gtk.Button button_plus = new Gtk.Button.from_icon_name ("plus-symbolic") {
             css_classes = { "circular" },
             halign = Gtk.Align.CENTER,
             valign = Gtk.Align.CENTER
         };
+
         private Gtk.Button button_minus = new Gtk.Button.from_icon_name ("minus-symbolic") {
             css_classes = { "circular" },
             halign = Gtk.Align.CENTER,
@@ -183,14 +185,16 @@ namespace Vui.Widget {
             get_widget<Gtk.Entry> ().set_can_target (false);
             get_widget<Gtk.Entry> ().set_text (placeholder);
 
-            state.changed.connect ((value) => this.text.set_text (value.to_string ()));
-
             this.button_plus.clicked.connect (() => {
-                state.state++;
+                var number = int.parse (this.text.get_text ()) + 1;
+                this.text.set_text (number.to_string ());
+                state.state = number;
             });
 
             this.button_minus.clicked.connect (() => {
-                state.state--;
+                var number = int.parse (this.text.get_text ()) - 1;
+                this.text.set_text (number.to_string ());
+                state.state = number;
             });
 
             this.build ();
