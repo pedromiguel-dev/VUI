@@ -202,7 +202,7 @@ namespace Vui.Widget {
     }
 
     public class PasswordEntry : EntryCommon {
-        private Button reveal_button = new Button.from_icon_name ("view-reveal-symbolic");
+        private Button reveal_button = new Button.from_icon_name ("reveal-symbolic");
 
         public PasswordEntry (string placeholder, owned Vui.Model.Store<string>? state = null) {
             base (placeholder);
@@ -218,7 +218,13 @@ namespace Vui.Widget {
             this.reveal_button.on_click = () => {
                 var entry = get_widget<PasswordEntry> ();
                 var text = (Gtk.Text) entry.get_first_child ();
+
                 text.set_visibility (!text.get_visibility ());
+                if (text.get_visibility () == true) {
+                    this.reveal_button.widget.set_icon_name ("unreveal-symbolic");
+                } else {
+                    this.reveal_button.widget.set_icon_name ("reveal-symbolic");
+                }
             };
 
             this.append = this.reveal_button;
