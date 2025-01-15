@@ -75,7 +75,8 @@ namespace Demo {
                                                 new Toggle ("Toggle", boolstate),
                                                 new Gtk.Entry () {
                                                     placeholder_text = "Normal Entry"
-                                                }
+                                                },
+                                                new PasswordEntry ("Password here")
                                             },
                                             hexpand = true,
                                             vexpand = true
@@ -156,9 +157,8 @@ namespace Demo {
                         new Section () {
                             halign = Gtk.Align.FILL,
                             content = {
-                                new Entry ("Type your password") {
+                                new Entry ("Type your password", state) {
                                     hexpand = true,
-                                    bind_buffer = state
                                 },
                             }
                         },
@@ -175,10 +175,17 @@ namespace Demo {
 
     public class FormScreen : Derived {
 
+        private Store<string> entry_name = new Store<string> ("");
+        private Store<string> entry_password = new Store<string> ("");
         private Store<bool> toogle = new Store<bool> (false);
         private Store<int> spinrow = new Store<int> (0);
 
         construct {
+            entry_name.changed.connect ((state) => message ("Name %s", state));
+            entry_password.changed.connect ((state) => message ("Password %s", state));
+            toogle.changed.connect ((state) => message ("Toggle is %s", state ? "true" : "false"));
+            spinrow.changed.connect ((state) => message ("SpinRow is %d", state));
+
             derived = new ToolBar () {
                 title_page = "Account",
                 margin_start = 20,
@@ -190,7 +197,7 @@ namespace Demo {
                             content = {
                                 new Section ("Personal Information") {
                                     content = {
-                                        new Entry ("First Name") {
+                                        new Entry ("First Name", entry_name) {
                                             append = new Button.from_icon_name ("document-edit-symbolic") {
                                                 on_click = () => message ("button was clicked")
                                             }
@@ -202,7 +209,7 @@ namespace Demo {
                                     content = {
                                         new Toggle ("Birthday", toogle),
                                         new SpinRow ("Something is: ", spinrow),
-                                        new Entry ("Type your password"),
+                                        new PasswordEntry ("Password here", entry_password)
                                     }
                                 }
                             }

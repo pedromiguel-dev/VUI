@@ -58,18 +58,15 @@ namespace Vui.Widget {
         }
     }
 
-    public abstract class EntryCommon : Vui.Impl.Subclass<Gtk.Entry> {
+    public abstract class EntryCommon : Vui.Impl.Subclass<Gtk.Widget> {
+
+        private Gtk.Overlay overlay = new Gtk.Overlay ();
+
         protected Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 8) {
             margin_start = 4,
             margin_end = 8,
             halign = Gtk.Align.END
         };
-
-        public virtual Vui.Model.Store<string> bind_buffer {
-            set {
-                widget.changed.connect ((element) => value.state = element.get_text ());
-            }
-        }
 
         public virtual Vui.Widget.Button append {
             set {
@@ -80,24 +77,30 @@ namespace Vui.Widget {
             }
         }
 
+        public T get_widget<T> () {
+            return (T) this.widget;
+        }
+
+        public void set_widget<T> (T widget) {
+            this.widget = (Gtk.Widget) widget;
+            overlay.child = this.widget;
+        }
+
         private EntryCommon (string placeholder) {
-            var overl = new Gtk.Overlay ();
-
-            this.widget = new Gtk.Entry () {
-                placeholder_text = placeholder,
-                css_classes = { "vui-section-entry-text" }
-            };
-
-            overl.child = this.widget;
-            overl.add_overlay (this.box);
-
-            this.child = overl;
+            this.overlay.add_overlay (this.box);
+            this.child = this.overlay;
         }
     }
 
     public class Entry : EntryCommon {
-        public Entry (string placeholder) {
+        public Entry (string placeholder, owned Vui.Model.Store<string>? state = null) {
             base (placeholder);
+            set_widget<Gtk.Entry> (new Gtk.Entry () {
+                placeholder_text = placeholder,
+                css_classes = { "vui-section-entry-text" }
+            });
+            if (state != null)
+                get_widget<Gtk.Entry> ().changed.connect ((element) => state.state = element.get_text ());
         }
     }
 
@@ -111,7 +114,7 @@ namespace Vui.Widget {
             valign = Gtk.Align.CENTER,
         };
 
-        private void place_controller () {
+        private void set_controller () {
             this.add_controller (click_controller);
             this.click_controller.pressed.connect (() => {
                 toggle.activate ();
@@ -119,21 +122,26 @@ namespace Vui.Widget {
             });
         }
 
-        public Toggle (string placeholder, owned Vui.Model.Store<bool> state) {
+        public Toggle (string placeholder, owned Vui.Model.Store<bool>? state = null) {
             base (placeholder);
+
+            set_widget<Gtk.Entry> (new Gtk.Entry () {
+                placeholder_text = placeholder,
+                css_classes = { "vui-section-entry-text" }
+            });
+            get_widget<Gtk.Entry> ().set_can_focus (false);
+            get_widget<Gtk.Entry> ().set_can_target (false);
+            get_widget<Gtk.Entry> ().set_text (placeholder);
             this.toggle.set_can_target (false);
-            this.widget.set_can_focus (false);
-            this.widget.set_can_target (false);
-            this.widget.set_text (placeholder);
 
-            this.place_controller ();
-
-            this.box.append (toggle);
+            this.set_controller ();
 
             this.toggle.state_set.connect ((value) => {
                 state.state = value;
                 return false;
             });
+
+            this.box.append (toggle);
         }
     }
 
@@ -159,22 +167,23 @@ namespace Vui.Widget {
         };
 
         private void build () {
-
             this.box.append (text);
             this.box.append (button_plus);
             this.box.append (button_minus);
         }
 
-        public SpinRow (string placeholder, owned Vui.Model.Store<int> state) {
+        public SpinRow (string placeholder, owned Vui.Model.Store<int>? state = null) {
             base (placeholder);
 
-            this.widget.set_can_focus (false);
-            this.widget.set_can_target (false);
-            this.widget.set_text (placeholder);
+            set_widget<Gtk.Entry> (new Gtk.Entry () {
+                placeholder_text = placeholder,
+                css_classes = { "vui-section-entry-text" }
+            });
+            get_widget<Gtk.Entry> ().set_can_focus (false);
+            get_widget<Gtk.Entry> ().set_can_target (false);
+            get_widget<Gtk.Entry> ().set_text (placeholder);
 
-            state.changed.connect ((value) =>
-                                   this.text.set_text (value.to_string ())
-            );
+            state.changed.connect ((value) => this.text.set_text (value.to_string ()));
 
             this.button_plus.clicked.connect (() => {
                 state.state++;
@@ -189,54 +198,26 @@ namespace Vui.Widget {
     }
 
     public class PasswordEntry : EntryCommon {
+        private Button reveal_button = new Button.from_icon_name ("view-reveal-symbolic");
 
-        private Gtk.Entry text = new Gtk.Entry () {
-            css_classes = { "vui-section-entry", "vui-section-spin-row-text" },
-            valign = Gtk.Align.CENTER,
-            vexpand = false,
-            input_purpose = Gtk.InputPurpose.NUMBER,
-            xalign = (float) 0.99,
-            text = "0"
-        };
-
-        private Gtk.Button button_plus = new Gtk.Button.from_icon_name ("plus-symbolic") {
-            css_classes = { "circular" },
-            halign = Gtk.Align.CENTER,
-            valign = Gtk.Align.CENTER
-        };
-
-        private Gtk.Button button_minus = new Gtk.Button.from_icon_name ("minus-symbolic") {
-            css_classes = { "circular" },
-            halign = Gtk.Align.CENTER,
-            valign = Gtk.Align.CENTER
-        };
-
-        private void build () {
-            this.box.append (text);
-            this.box.append (button_plus);
-            this.box.append (button_minus);
-        }
-
-        public PasswordEntry (string placeholder, owned Vui.Model.Store<int> state) {
+        public PasswordEntry (string placeholder, owned Vui.Model.Store<string>? state = null) {
             base (placeholder);
 
-            this.widget.set_can_focus (false);
-            this.widget.set_can_target (false);
-            this.widget.set_text (placeholder);
-
-            state.changed.connect ((value) =>
-                                   this.text.set_text (value.to_string ())
-            );
-
-            this.button_plus.clicked.connect (() => {
-                state.state++;
+            set_widget<Gtk.PasswordEntry> (new Gtk.PasswordEntry () {
+                placeholder_text = placeholder,
+                css_classes = { "vui-section-entry-text" },
             });
 
-            this.button_minus.clicked.connect (() => {
-                state.state--;
-            });
+            if (state != null)
+                get_widget<Gtk.PasswordEntry> ().changed.connect ((element) => state.state = element.get_text ());
 
-            this.build ();
+            this.reveal_button.on_click = () => {
+                var entry = get_widget<PasswordEntry> ();
+                var text = (Gtk.Text) entry.get_first_child ();
+                text.set_visibility (!text.get_visibility ());
+            };
+
+            this.append = this.reveal_button;
         }
     }
 }
