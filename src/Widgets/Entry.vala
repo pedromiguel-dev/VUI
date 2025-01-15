@@ -126,12 +126,13 @@ namespace Vui.Widget {
             base (placeholder);
 
             set_widget<Gtk.Entry> (new Gtk.Entry () {
+                text = placeholder,
                 placeholder_text = placeholder,
-                css_classes = { "vui-section-entry-text" }
+                css_classes = { "vui-section-entry-text" },
+                can_focus = false,
+                can_target = false,
             });
-            get_widget<Gtk.Entry> ().set_can_focus (false);
-            get_widget<Gtk.Entry> ().set_can_target (false);
-            get_widget<Gtk.Entry> ().set_text (placeholder);
+
             this.toggle.set_can_target (false);
 
             this.set_controller ();
@@ -178,12 +179,12 @@ namespace Vui.Widget {
             base (placeholder);
 
             set_widget<Gtk.Entry> (new Gtk.Entry () {
+                text = placeholder,
                 placeholder_text = placeholder,
-                css_classes = { "vui-section-entry-text" }
+                css_classes = { "vui-section-entry-text" },
+                can_focus = false,
+                can_target = false,
             });
-            get_widget<Gtk.Entry> ().set_can_focus (false);
-            get_widget<Gtk.Entry> ().set_can_target (false);
-            get_widget<Gtk.Entry> ().set_text (placeholder);
 
             this.button_plus.clicked.connect (() => {
                 var number = int.parse (this.text.get_text ()) + 1;
