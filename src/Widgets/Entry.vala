@@ -38,7 +38,7 @@ namespace Vui.Widget {
             }
         }
 
-        public Button trigger {
+        public Button bottom {
             set {
                 var focus_controller = new Gtk.EventControllerFocus ();
                 var row = new Gtk.ListBoxRow () {
