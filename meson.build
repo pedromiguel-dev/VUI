@@ -15,11 +15,11 @@ pkgconfig = import('pkgconfig')
 i18n = import('i18n')
 gnome = import('gnome')
 
-subdir('data')
 subdir('src')
 subdir('po')
 
 if get_option('demo')
+  subdir('data')
   subdir('demo')
 endif
 

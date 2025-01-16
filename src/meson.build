@@ -1,24 +1,26 @@
+subdir('Icons')
+
 sources = [
   'Init.vala',
-  'Adwaita' / 'Implementation' / 'Flow.vala',
-  'Adwaita' / 'Implementation' / 'Impl.vala',
-  'Adwaita' / 'Model' / 'Store.vala',
-  'Adwaita' / 'Widgets' / 'AlertDialog.vala',
-  'Adwaita' / 'Widgets' / 'Application.vala',
-  'Adwaita' / 'Widgets' / 'Box.vala',
-  'Adwaita' / 'Widgets' / 'Button.vala',
-  'Adwaita' / 'Widgets' / 'Dialog.vala',
-  'Adwaita' / 'Widgets' / 'Entry.vala',
-  'Adwaita' / 'Widgets' / 'HeaderBar.vala',
-  'Adwaita' / 'Widgets' / 'Label.vala',
-  'Adwaita' / 'Widgets' / 'MenuButton.vala',
-  'Adwaita' / 'Widgets' / 'Navigation.vala',
-  'Adwaita' / 'Widgets' / 'Overlay.vala',
-  'Adwaita' / 'Widgets' / 'Page.vala',
-  'Adwaita' / 'Widgets' / 'ScrolledBox.vala',
-  'Adwaita' / 'Widgets' / 'Spacer.vala',
-  'Adwaita' / 'Widgets' / 'Toolbar.vala',
-  'Adwaita' / 'Widgets' / 'Window.vala',
+  'Implementation' / 'Flow.vala',
+  'Implementation' / 'Impl.vala',
+  'Model' / 'Store.vala',
+  'Widgets' / 'AlertDialog.vala',
+  'Widgets' / 'Application.vala',
+  'Widgets' / 'Box.vala',
+  'Widgets' / 'Button.vala',
+  'Widgets' / 'Dialog.vala',
+  'Widgets' / 'Entry.vala',
+  'Widgets' / 'HeaderBar.vala',
+  'Widgets' / 'Label.vala',
+  'Widgets' / 'MenuButton.vala',
+  'Widgets' / 'Navigation.vala',
+  'Widgets' / 'Overlay.vala',
+  'Widgets' / 'Page.vala',
+  'Widgets' / 'ScrolledBox.vala',
+  'Widgets' / 'Spacer.vala',
+  'Widgets' / 'Toolbar.vala',
+  'Widgets' / 'Window.vala',
 ]
 
 ## LIB
@@ -37,6 +39,7 @@ libvui = library(
   meson.project_name(),
 
   vui_sources,
+  icons_resource,
 
   dependencies: [
     vui_deps,

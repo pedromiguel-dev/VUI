@@ -1,3 +1,7 @@
+.spacer {
+    background: none;
+}
+
 .nav_link {
     background: transparent;
     border: none;
@@ -7,4 +11,47 @@
 
 .dimmed-gray {
     color: gray;
+}
+
+.round {
+    border-radius: 100%;
+}
+
+.vui-section {
+    background-color: var(--light-1);
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 0px rgba(128, 128, 128, 0.45);
+}
+
+.vui-section row {
+    transition: all 80ms ease-in-out;
+}
+
+.vui-section-entry {
+    background-color: transparent;
+    outline: none;
+    margin: 2px;
+    border-radius: 10px;
+}
+
+.vui-section-entry>entry {
+    background-color: transparent;
+}
+
+.vui-section-row-focused {
+    outline-width: 2px;
+    outline-offset: -2px;
+    outline-color: var(--accent-bg-color);
+}
+
+.vui-section-row-first {
+    border-radius: 10px 10px 0 0;
+}
+
+.vui-section-row-last {
+    border-radius: 0 0 10px 10px;
+}
+
+.vui-section-row-solo {
+    border-radius: 10px;
 }
