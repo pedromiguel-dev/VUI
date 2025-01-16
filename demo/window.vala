@@ -210,8 +210,11 @@ namespace Demo {
                                         new Toggle ("Birthday", toogle),
                                         new SpinRow ("Something is: ", spinrow),
                                         new PasswordEntry ("Password here", entry_password)
+                                    },
+                                    trigger = new Button.with_label ("Confirmation") {
+                                        on_click = () => message ("confirmation")
                                     }
-                                }
+                                },
                             }
                         }
                     }

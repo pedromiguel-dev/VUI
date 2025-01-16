@@ -2,13 +2,13 @@ namespace Vui.Widget {
 
     public class Section : Vui.Widget.VBox {
         private Gtk.ListBox box_list;
+        private Gtk.ListBox trigger_box;
 
         public new EntryCommon[] content {
             set {
                 foreach (var entry in value) {
                     var click_controller = new Gtk.GestureClick ();
                     var focus_controller = new Gtk.EventControllerFocus ();
-
                     var row = new Gtk.ListBoxRow () {
                         child = entry,
                         focusable = false,
@@ -16,12 +16,13 @@ namespace Vui.Widget {
 
                     // on click focus will move to entry
                     entry.add_controller (click_controller);
-                    click_controller.pressed.connect (() => entry.widget.focus (Gtk.DirectionType.DOWN));
-
                     // when focus is on entry set row's styles
                     entry.widget.set_can_target (false);
-                    entry.widget.add_controller (focus_controller);
                     entry.widget.add_css_class ("vui-section-entry");
+                    entry.widget.add_controller (focus_controller);
+
+
+                    click_controller.pressed.connect (() => entry.widget.focus (Gtk.DirectionType.DOWN));
                     focus_controller.enter.connect (() => row.add_css_class ("vui-section-row-focused"));
                     focus_controller.leave.connect (() => row.remove_css_class ("vui-section-row-focused"));
 
@@ -37,10 +38,34 @@ namespace Vui.Widget {
             }
         }
 
+        public Button trigger {
+            set {
+                var focus_controller = new Gtk.EventControllerFocus ();
+                var row = new Gtk.ListBoxRow () {
+                    child = value,
+                    focusable = false,
+                };
+                row.add_css_class ("vui-section-row-solo");
+                focus_controller.enter.connect (() => row.add_css_class ("vui-section-row-focused"));
+                focus_controller.leave.connect (() => row.remove_css_class ("vui-section-row-focused"));
+
+                value.widget.add_css_class ("vui-section-entry");
+                value.widget.add_controller (focus_controller);
+
+                this.destination = concatenate_arrays (this.destination, value.destination);
+                this.trigger_box.append (row);
+            }
+        }
+
         public Section (string? header = null) {
             this.box_list = new Gtk.ListBox ();
+            this.trigger_box = new Gtk.ListBox ();
+
             this.box_list.add_css_class ("vui-section");
             this.box_list.set_selection_mode (Gtk.SelectionMode.NONE);
+
+            this.trigger_box.add_css_class ("vui-section");
+            this.trigger_box.set_selection_mode (Gtk.SelectionMode.NONE);
 
             if (header != null) {
                 this.prepend (new Vui.Widget.Label (header) {
@@ -54,7 +79,9 @@ namespace Vui.Widget {
             this.margin_bottom = 8;
             this.valign = Gtk.Align.FILL;
             this.halign = Gtk.Align.FILL;
+            this.spacing = 8;
             this.append (this.box_list);
+            this.append (this.trigger_box);
         }
     }
 
