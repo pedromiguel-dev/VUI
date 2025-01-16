@@ -193,30 +193,26 @@ namespace Demo {
                 top_bar = new HeaderBar (),
                 content = new VBox () {
                     content = {
-                        new VBox () {
+                        new Section ("Personal Information") {
                             content = {
-                                new Section ("Personal Information") {
-                                    content = {
-                                        new Entry ("First Name", entry_name) {
-                                            append = new Button.from_icon_name ("document-edit-symbolic") {
-                                                on_click = () => message ("button was clicked")
-                                            }
-                                        },
-                                        new Entry ("Last Name"),
+                                new Entry ("First Name", entry_name) {
+                                    append = new Button.from_icon_name ("document-edit-symbolic") {
+                                        on_click = () => message ("button was clicked")
                                     }
                                 },
-                                new Section ("Actions") {
-                                    content = {
-                                        new Toggle ("Birthday", toogle),
-                                        new SpinRow ("Something is: ", spinrow),
-                                        new PasswordEntry ("Password here", entry_password)
-                                    },
-                                    bottom = new Button.with_label ("Confirmation") {
-                                        on_click = () => message ("confirmation")
-                                    }
-                                },
+                                new Entry ("Last Name"),
                             }
-                        }
+                        },
+                        new Section ("Actions") {
+                            content = {
+                                new Toggle ("Birthday", toogle),
+                                new SpinRow ("Something is: ", spinrow),
+                                new PasswordEntry ("Password here", entry_password)
+                            },
+                            bottom = new Button.with_label ("Confirmation") {
+                                on_click = () => message ("confirmation")
+                            }
+                        },
                     }
                 }
             };
