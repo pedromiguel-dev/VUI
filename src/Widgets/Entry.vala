@@ -176,7 +176,7 @@ namespace Vui.Widget {
     public class SpinRow : EntryCommon {
 
         private Gtk.Entry text = new Gtk.Entry () {
-            css_classes = { "vui-section-entry", "vui-section-spin-row-text" },
+            css_classes = { "vui-section-entry" },
             valign = Gtk.Align.CENTER,
             vexpand = false,
             input_purpose = Gtk.InputPurpose.NUMBER,
@@ -208,7 +208,6 @@ namespace Vui.Widget {
             set_widget<Gtk.Entry> (new Gtk.Entry () {
                 text = placeholder,
                 placeholder_text = placeholder,
-                css_classes = { "vui-section-entry-text" },
                 can_focus = false,
                 can_target = false,
             });
