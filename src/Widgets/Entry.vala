@@ -13,16 +13,12 @@ namespace Vui.Widget {
                         child = entry,
                         focusable = false,
                     };
+                    row.add_controller (click_controller);
 
-                    // on click focus will move to entry
-                    entry.add_controller (click_controller);
-                    // when focus is on entry set row's styles
-                    entry.widget.set_can_target (false);
-                    entry.widget.add_css_class ("vui-section-entry");
-                    entry.widget.add_controller (focus_controller);
+                    entry.add_css_class ("vui-section-entry");
+                    entry.add_controller (focus_controller);
 
-
-                    click_controller.pressed.connect (() => entry.widget.focus (Gtk.DirectionType.DOWN));
+                    click_controller.pressed.connect (() => entry.widget.focus (Gtk.DirectionType.TAB_FORWARD));
                     focus_controller.enter.connect (() => row.add_css_class ("vui-section-row-focused"));
                     focus_controller.leave.connect (() => row.remove_css_class ("vui-section-row-focused"));
 
@@ -49,8 +45,8 @@ namespace Vui.Widget {
                 focus_controller.enter.connect (() => row.add_css_class ("vui-section-row-focused"));
                 focus_controller.leave.connect (() => row.remove_css_class ("vui-section-row-focused"));
 
-                value.widget.add_css_class ("vui-section-entry");
-                value.widget.add_controller (focus_controller);
+                value.add_css_class ("vui-section-entry");
+                value.add_controller (focus_controller);
 
                 this.destination = concatenate_arrays (this.destination, value.destination);
                 this.trigger_box.append (row);
@@ -144,6 +140,7 @@ namespace Vui.Widget {
         private void set_controller () {
             this.add_controller (click_controller);
             this.click_controller.pressed.connect (() => {
+                message ("Toggle controller");
                 toggle.activate ();
                 toggle.grab_focus ();
             });

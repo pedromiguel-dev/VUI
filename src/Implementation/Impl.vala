@@ -112,5 +112,27 @@ namespace Vui.Impl {
             get { return gtk_widget.height_request; }
             set { gtk_widget.height_request = value; }
         }
+
+        public new bool can_target {
+            get {
+                return gtk_widget.get_can_target ();
+            }
+            set {
+                gtk_widget.set_can_target (value);
+            }
+        }
+
+        public new bool can_focus {
+            get {
+                return gtk_widget.get_can_focus ();
+            }
+            set {
+                gtk_widget.set_can_focus (value);
+            }
+        }
+
+        public new void add_css_class (string css_class) {
+            gtk_widget.add_css_class (css_class);
+        }
     }
 }
