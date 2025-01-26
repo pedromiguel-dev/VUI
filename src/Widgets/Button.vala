@@ -1,25 +1,41 @@
 
-public class Vui.Widget.Button : Vui.Impl.Subclass<Gtk.Button> {
+namespace Vui {
 
-    public delegate void on_click_callback ();
+    public class Widget.Button : Impl.View {
 
-    public unowned on_click_callback? on_click {
-        set {
-            widget.clicked.connect (() => value ());
+        internal Gtk.Button button_widget;
+
+        public delegate void on_click_callback ();
+
+        public void set_icon_name (string icon_name) {
+            this.button_widget.set_icon_name (icon_name);
         }
-    }
 
-    public Button () {
-        widget = new Gtk.Button ();
-        this.child = widget;
-    }
+        public unowned on_click_callback? on_click {
+            set {
+                button_widget.clicked.connect (() => value ());
+            }
+        }
 
-    public Button.from_icon_name (string icon_name) {
-        widget = new Gtk.Button.from_icon_name (icon_name);
-        this.child = widget;
-    }
-    public Button.with_label (string label) {
-        widget = new Gtk.Button.with_label (label);
-        this.child = widget;
+        internal Impl.View child {
+            set {
+                button_widget.child = value;
+            }
+        }
+
+        public Button () {
+            this.button_widget = new Gtk.Button ();
+            this.set_widget (this.button_widget);
+        }
+
+        public Button.from_icon_name (string icon_name) {
+            this.button_widget = new Gtk.Button.from_icon_name (icon_name);
+            this.set_widget (this.button_widget);
+        }
+
+        public Button.with_label (string label) {
+            this.button_widget = new Gtk.Button.with_label (label);
+            this.set_widget (this.button_widget);
+        }
     }
 }

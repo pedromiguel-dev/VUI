@@ -9,7 +9,11 @@ project(
   ],
 )
 
-vui_deps = [dependency('gtk4'), dependency('libadwaita-1', version: '>= 1.4')]
+vui_deps = [
+  dependency('gtk4'),
+  dependency('libadwaita-1', version: '>= 1.4'),
+  dependency('gee-0.8'),
+]
 
 pkgconfig = import('pkgconfig')
 i18n = import('i18n')

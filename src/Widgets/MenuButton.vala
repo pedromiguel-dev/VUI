@@ -1,16 +1,17 @@
-namespace Vui.Widget {
-    public class MenuButton : Vui.Impl.Subclass<Gtk.MenuButton> {
+namespace Vui {
+    public class Widget.MenuButton : Impl.View {
 
-        public Gtk.Widget content {
+        public Gtk.MenuButton menubutton_widget = new Gtk.MenuButton ();
+
+        public Impl.View content {
             set {
-                Vui.Impl.BoubleDestination (value, this);
-                widget.set_popover (new Gtk.Popover () { child = value });
+                this.destination = value.destination;
+                menubutton_widget.set_popover (new Gtk.Popover () { child = value });
             }
         }
 
         public MenuButton () {
-            widget = new Gtk.MenuButton ();
-            this.child = widget;
+            this.set_widget (menubutton_widget);
         }
     }
 }

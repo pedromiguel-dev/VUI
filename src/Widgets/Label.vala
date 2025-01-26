@@ -1,36 +1,39 @@
+namespace Vui {
 
-public class Vui.Widget.Label : Vui.Impl.Subclass<Gtk.Label> {
+    public class Widget.Label : Impl.View {
+        private Gtk.Label label_widget;
 
-    public bool wrap {
-        set {
-            widget.set_wrap (value);
-            widget.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
+        public bool wrap {
+            set {
+                label_widget.set_wrap (value);
+                label_widget.set_wrap_mode (Pango.WrapMode.WORD_CHAR);
+            }
         }
-    }
 
-    public int lines {
-        set {
-            widget.set_lines (value);
+        public int lines {
+            set {
+                label_widget.set_lines (value);
+            }
         }
-    }
 
-    public Pango.EllipsizeMode ellipsize {
-        set {
-            widget.set_ellipsize (value);
+        public Pango.EllipsizeMode ellipsize {
+            set {
+                label_widget.set_ellipsize (value);
+            }
         }
-    }
 
-    public Label.ref (Vui.Model.Store<string> state) {
-        widget = new Gtk.Label (state.state);
-        if (state != null)
-            state.changed.connect ((text) => {
-                widget.label = text;
-            });
-        this.child = widget;
-    }
+        public Label.ref (Model.Store<string> state) {
+            label_widget = new Gtk.Label (state.state);
+            if (state != null)
+                state.changed.connect ((text) => {
+                    label_widget.label = text;
+                });
+            this.set_widget (label_widget);
+        }
 
-    public Label (string label) {
-        widget = new Gtk.Label (label);
-        this.child = widget;
+        public Label (string label) {
+            label_widget = new Gtk.Label (label);
+            this.set_widget (label_widget);
+        }
     }
 }

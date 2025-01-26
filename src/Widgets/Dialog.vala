@@ -1,29 +1,30 @@
-public class Vui.Widget.Dialog : Vui.Impl.Subclass<Adw.Dialog> {
+public class Vui.Widget.Dialog : Vui.Impl.View {
+
+    private Adw.Dialog dialog_widget = new Adw.Dialog () {
+        content_width = 600,
+        content_height = 550
+    };
 
     public int[] content_size {
         set {
-            widget.content_width = value[0];
-            widget.content_height = value[1];
+            dialog_widget.content_width = value[0];
+            dialog_widget.content_height = value[1];
         }
     }
 
     public bool follows_content_size {
         set {
-            widget.follows_content_size = value;
+            dialog_widget.follows_content_size = value;
         }
     }
 
-    public Gtk.Widget content {
+    public Impl.View content {
         set {
-            widget.set_child (value);
+            dialog_widget.set_child (value);
         }
     }
 
     public Dialog () {
-        widget = new Adw.Dialog () {
-            content_width = 600,
-            content_height = 550
-        };
-        widget.present (Vui.Widget.App.window);
+        dialog_widget.present (Vui.Widget.App.window);
     }
 }

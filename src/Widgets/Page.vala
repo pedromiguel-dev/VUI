@@ -1,17 +1,17 @@
-namespace Vui.Widget {
-    public class Page : Adw.NavigationPage, Vui.Impl.Logistics {
+namespace Vui {
+    public class Widget.Page : Adw.NavigationPage {
 
-        public override string title {
+        public new string title {
             set; get; default = null;
         }
 
-        public override Vui.Impl.Subclass[] destination {
+        public Impl.View[] destination {
             set; get; default = null;
         }
 
-        public Gtk.Widget content {
+        public Impl.View content {
             set {
-                Vui.Impl.BoubleDestination (value, this);
+                this.destination = value.destination;
                 this.set_child (value);
             }
         }

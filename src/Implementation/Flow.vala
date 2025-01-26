@@ -1,22 +1,22 @@
-namespace Vui.Flow {
+namespace Vui {
 
-    public class ShowIf : Vui.Impl.Subclass<Gtk.Box> {
+    public class Flow.ShowIf : Impl.View {
+        private Gtk.Box box_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 
-        public Vui.Impl.Logistics[] content {
+        public Impl.View[] content {
             set {
                 foreach (var item in value) {
-                    this.widget.append ((Gtk.Widget) item);
+                    this.box_widget.append ((Gtk.Widget) item);
                 }
             }
         }
 
-        public ShowIf (Vui.Model.Store<bool> state) {
-            this.widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            this.widget.set_visible (state.state);
-            this.child = widget;
+        public ShowIf (Model.Store<bool> state) {
+            this.box_widget.set_visible (state.state);
+            this.set_widget (box_widget);
 
             state.changed.connect ((state) => {
-                this.widget.set_visible (state);
+                this.box_widget.set_visible (state);
             });
         }
     }

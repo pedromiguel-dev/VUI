@@ -1,26 +1,22 @@
-namespace Vui.Widget {
-    public class Separator : Vui.Impl.Subclass<Gtk.Separator> {
-        public Separator (Gtk.Orientation orientation) {
-            widget = new Gtk.Separator (orientation);
-            this.child = widget;
-        }
-    }
-    public class VSpacer : Vui.Impl.Subclass<Gtk.Separator> {
-        public VSpacer () {
-            widget = new Gtk.Separator (Gtk.Orientation.VERTICAL) {
-                css_classes = { "spacer" }
-            };
-            this.child = widget;
+namespace Vui {
+    public abstract class Widget.Separator : Impl.View {
+        private Gtk.Separator separator_widget;
+
+        private Separator (Gtk.Orientation orientation) {
+            separator_widget = new Gtk.Separator (orientation);
+            this.set_widget (separator_widget);
             this.vexpand = true;
         }
     }
-    public class HSpacer : Vui.Impl.Subclass<Gtk.Separator> {
+
+    public class Widget.VSpacer : Widget.Separator {
+        public VSpacer () {
+            base (Gtk.Orientation.VERTICAL);
+        }
+    }
+    public class Widget.HSpacer : Widget.Separator {
         public HSpacer () {
-            widget = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
-                css_classes = { "spacer" }
-            };
-            this.child = widget;
-            this.hexpand = true;
+            base (Gtk.Orientation.HORIZONTAL);
         }
     }
 }

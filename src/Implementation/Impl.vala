@@ -1,138 +1,115 @@
 namespace Vui.Impl {
 
-    private void BoubleDestination (Gtk.Widget value, Logistics parent) {
-        Logistics b = (value is  Logistics) ? (Logistics) value : null;
-        if (b != null && b.destination != null)
-            parent.destination = b.destination;
-    }
+    public abstract class View : Gtk.Widget {
 
-    protected interface Logistics : GLib.Object {
-        public abstract string title {
-            set; get; default = null;
-        }
-        public abstract Subclass[] destination {
-            set; get; default = null;
-        }
-    }
+        internal Gee.ArrayList<Gtk.Widget> children = new Gee.ArrayList<Gtk.Widget> ();
+        private Gtk.Widget widget_internal;
+        private View[] _destination = {};
 
-    public abstract class Derived : Subclass<Gtk.Widget> {
-        public Gtk.Widget derived {
+        construct {
+            this.set_layout_manager (new Gtk.BinLayout ());
+            this.widget_internal = this;
+        }
+
+        public View view {
+            get {
+                return (View) this.widget_internal;
+            }
             set {
-                widget = value;
-                this.child = widget;
-
-                Logistics b = (Logistics) value;
-                if (b != null) {
-                    this.destination = b.destination;
-                    this.title = b.title;
-                }
+                this.set_halign (value.halign);
+                this.set_valign (value.valign);
+                this.set_hexpand (value.hexpand);
+                this.set_vexpand (value.vexpand);
+                this.destination = value.destination;
+                this.title = value.title;
+                set_widget (value);
             }
         }
-    }
 
-    public abstract class Subclass<G>: Adw.Bin, Logistics {
-
-        public virtual G widget { get; set; }
-
-        private virtual Gtk.Widget gtk_widget {
-            get { return (Gtk.Widget) widget; }
-            set { widget = value; }
+        internal void set_widget (Gtk.Widget widget) {
+            this.widget_internal = widget;
+            widget.set_parent (this);
         }
 
-        public override string title {
-            set; get; default = null;
+        internal void set_child (Gtk.Widget widget) {
+            widget.set_parent (this);
+            this.children.add (widget);
         }
 
-        public override Subclass[] destination {
-            set; get; default = null;
+        public new void add_css_class (string css_class) {
+            widget_internal.add_css_class (css_class);
+        }
+
+        public string title;
+
+        public View[] destination {
+            get {
+                return _destination;
+            }
+            owned set {
+                _destination = value;
+            }
         }
 
         public new bool vexpand {
-            get { return gtk_widget.get_vexpand (); }
+            get { return widget_internal.get_vexpand (); }
             set {
-
+                widget_internal.set_vexpand (value);
                 this.set_vexpand (value);
-                gtk_widget.set_vexpand (value);
             }
         }
 
         public new bool hexpand {
-            get { return gtk_widget.get_hexpand (); }
+            get { return widget_internal.get_hexpand (); }
             set {
+                widget_internal.set_hexpand (value);
                 this.set_hexpand (value);
-                gtk_widget.set_hexpand (value);
             }
         }
 
         public new Gtk.Align valign {
-            get { return gtk_widget.valign; }
+            get { return widget_internal.valign; }
             set {
                 this.set_valign (value);
-                gtk_widget.set_valign (value);
+                widget_internal.set_valign (value);
             }
         }
 
         public new Gtk.Align halign {
-            get { return gtk_widget.halign; }
+            get { return widget_internal.halign; }
             set {
-                this.set_halign (value);
-                gtk_widget.set_halign (value);
+                this.set_valign (value);
+                widget_internal.set_halign (value);
             }
         }
 
         public new int margin_top {
-            get { return gtk_widget.margin_top; }
-            set { gtk_widget.margin_top = value; }
+            get { return widget_internal.margin_top; }
+            set { widget_internal.margin_top = value; }
         }
 
         public new int margin_start {
-            get { return gtk_widget.margin_start; }
-            set { gtk_widget.margin_start = value; }
+            get { return widget_internal.margin_start; }
+            set { widget_internal.margin_start = value; }
         }
 
         public new int margin_bottom {
-            get { return gtk_widget.margin_bottom; }
-            set { gtk_widget.margin_bottom = value; }
+            get { return widget_internal.margin_bottom; }
+            set { widget_internal.margin_bottom = value; }
         }
 
         public new int margin_end {
-            get { return gtk_widget.margin_end; }
-            set { gtk_widget.margin_end = value; }
+            get { return widget_internal.margin_end; }
+            set { widget_internal.margin_end = value; }
         }
 
         public new string[] css_classes {
-            set {
-                foreach (var item in value) {
-                    gtk_widget.add_css_class (item);
-                }
-            }
-        }
-
-        public new int height_request {
-            get { return gtk_widget.height_request; }
-            set { gtk_widget.height_request = value; }
-        }
-
-        public new bool can_target {
-            get {
-                return gtk_widget.get_can_target ();
+            owned get {
+                return widget_internal.css_classes;
             }
             set {
-                gtk_widget.set_can_target (value);
+                widget_internal.set_css_classes (value);
             }
-        }
-
-        public new bool can_focus {
-            get {
-                return gtk_widget.get_can_focus ();
-            }
-            set {
-                gtk_widget.set_can_focus (value);
-            }
-        }
-
-        public new void add_css_class (string css_class) {
-            gtk_widget.add_css_class (css_class);
         }
     }
 }

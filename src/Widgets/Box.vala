@@ -1,48 +1,80 @@
-protected class Vui.Widget.Box : Gtk.Box, Vui.Impl.Logistics {
+namespace Vui {
+    protected class Widget.Box : Impl.View {
 
-    public override string title {
-        set; get; default = null;
-    }
+        private Gtk.BoxLayout layout_maneger = new Gtk.BoxLayout (Gtk.Orientation.HORIZONTAL);
 
-    public override Vui.Impl.Subclass[] destination {
-        set; get; default = null;
-    }
-    protected Vui.Impl.Subclass[] concatenate_arrays (Vui.Impl.Subclass[] array1, Vui.Impl.Subclass[] array2) {
-        Vui.Impl.Subclass[] combined_array = new Vui.Impl.Subclass[array1.length + array2.length];
+        internal Impl.View[] concatenate_arrays (Impl.View[] array1, Impl.View[] array2) {
+            Impl.View[] combined_array = new Impl.View[array1.length + array2.length];
 
-        for (int i = 0; i < array1.length; i++) {
-            combined_array[i] = array1[i];
+            for (int i = 0; i < array1.length; i++) {
+                combined_array[i] = array1[i];
+            }
+
+            for (int i = 0; i < array2.length; i++) {
+                combined_array[array1.length + i] = array2[i];
+            }
+
+            return combined_array;
         }
 
-        for (int i = 0; i < array2.length; i++) {
-            combined_array[array1.length + i] = array2[i];
-        }
-
-        return combined_array;
-    }
-
-    public Gtk.Widget[] content {
-        set {
-            foreach (Gtk.Widget child in value) {
-
-                Vui.Impl.Logistics b = (child is  Vui.Impl.Logistics) ? (Vui.Impl.Logistics) child : null;
-                if (b != null && b.destination != null)
-                    this.destination = concatenate_arrays (this.destination, b.destination);
-
-                this.append (child);
+        public Impl.View[] content {
+            set {
+                foreach (Impl.View child in value) {
+                    this.destination = concatenate_arrays (this.destination, child.destination);
+                    this.set_child (child);
+                }
             }
         }
-    }
-}
 
-public class Vui.Widget.HBox : Vui.Widget.Box {
-    public HBox () {
-        Object (orientation: Gtk.Orientation.HORIZONTAL, spacing: 0);
-    }
-}
+        public int spacing {
+            get {
+                return this.layout_maneger.spacing;
+            }
+            set {
+                this.layout_maneger.spacing = value;
+            }
+        }
 
-public class Vui.Widget.VBox : Vui.Widget.Box {
-    public VBox () {
-        Object (orientation: Gtk.Orientation.VERTICAL, spacing: 0);
+        public Gtk.Orientation orientation {
+            get {
+                return this.layout_maneger.orientation;
+            }
+            set {
+                this.layout_maneger.orientation = value;
+            }
+        }
+
+        public void append (Gtk.Widget widget) {
+            this.set_child (widget);
+        }
+
+        public void prepend (Gtk.Widget widget) {
+            foreach (Gtk.Widget child in this.children) {
+                child.unparent ();
+            }
+            this.set_child (widget);
+            foreach (Gtk.Widget child in this.children) {
+                if (child.get_parent == null)
+                    set_child (child);
+            }
+        }
+
+        construct {
+            this.set_layout_manager (layout_maneger);
+        }
+    }
+
+    public class Widget.HBox : Widget.Box {
+        public HBox () {
+            this.spacing = 6;
+            this.orientation = Gtk.Orientation.HORIZONTAL;
+        }
+    }
+
+    public class Widget.VBox : Widget.Box {
+        public VBox () {
+            this.spacing = 6;
+            this.orientation = Gtk.Orientation.VERTICAL;
+        }
     }
 }
