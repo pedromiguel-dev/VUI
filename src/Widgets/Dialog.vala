@@ -20,11 +20,13 @@ public class Vui.Widget.Dialog : Vui.Impl.View {
 
     public Impl.View content {
         set {
+            message ("dialog content properties");
             dialog_widget.set_child (value);
         }
     }
 
     public Dialog () {
+        this.set_wrapped_widget (dialog_widget);
         dialog_widget.present (Vui.Widget.App.window);
     }
 }

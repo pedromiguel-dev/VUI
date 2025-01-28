@@ -31,6 +31,10 @@ namespace Vui.Impl {
             widget.set_parent (this);
         }
 
+        internal void set_wrapped_widget (Gtk.Widget widget) {
+            this.widget_internal = widget;
+        }
+
         internal void set_child (Gtk.Widget widget) {
             widget.set_parent (this);
             this.children.add (widget);
@@ -48,6 +52,49 @@ namespace Vui.Impl {
             }
             owned set {
                 _destination = value;
+            }
+        }
+
+        public bool[] expand {
+            set {
+                if (value.length == 0) {
+                    this.vexpand = true;
+                    this.hexpand = true;
+                } else if (value.length == 1) {
+                    this.vexpand = value[0];
+                    this.hexpand = value[0];
+                } else {
+                    this.vexpand = value[0];
+                    this.hexpand = value[1];
+                }
+            }
+        }
+
+        public int[] margin {
+            set {
+                if (value.length == 1) {
+                    this.margin_top = value[0];
+                    this.margin_bottom = value[0];
+                    this.margin_start = value[0];
+                    this.margin_end = value[0];
+                } else if (value.length == 4) {
+                    this.margin_top = value[0];
+                    this.margin_bottom = value[1];
+                    this.margin_start = value[2];
+                    this.margin_end = value[3];
+                }
+            }
+        }
+
+        public Gtk.Align[] align {
+            set {
+                if (value.length == 1) {
+                    this.valign = value[0];
+                    this.halign = value[0];
+                } else if (value.length == 2) {
+                    this.valign = value[0];
+                    this.halign = value[1];
+                }
             }
         }
 
@@ -109,6 +156,15 @@ namespace Vui.Impl {
             }
             set {
                 widget_internal.set_css_classes (value);
+            }
+        }
+
+        public new bool focusable {
+            get {
+                return widget_internal.focusable;
+            }
+            set {
+                widget_internal.focusable = value;
             }
         }
     }

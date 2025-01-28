@@ -4,6 +4,11 @@ namespace Vui {
 
         public Gtk.Widget trigger {
             set {
+                value.focusable = false;
+
+                if (value is Impl.View)
+                    ((Impl.View) value).focusable = false;
+
                 this.button_widget.child = value;
             }
         }
@@ -24,7 +29,9 @@ namespace Vui {
 
         private Adw.NavigationView navigation_widget = new Adw.NavigationView () {
             hexpand = true,
-            vexpand = true
+            vexpand = true,
+            valign = Gtk.Align.FILL,
+            halign = Gtk.Align.FILL
         };
 
         public unowned navigation_callback? on_pushed {

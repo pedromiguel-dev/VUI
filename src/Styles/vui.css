@@ -26,6 +26,10 @@ button.small-button {
     transform: scale(0.9);
 }
 
+.remove-last-border {
+    border: none;
+}
+
 .vui-section {
     background-color: transparent;
     border-radius: 10px;

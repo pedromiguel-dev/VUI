@@ -54,7 +54,7 @@ namespace Vui {
             }
             this.set_child (widget);
             foreach (Gtk.Widget child in this.children) {
-                if (child.get_parent == null)
+                if (child.get_parent () == null)
                     set_child (child);
             }
         }
@@ -65,15 +65,15 @@ namespace Vui {
     }
 
     public class Widget.HBox : Widget.Box {
-        public HBox () {
-            this.spacing = 6;
+        public HBox (int spacing = 6) {
+            this.spacing = spacing;
             this.orientation = Gtk.Orientation.HORIZONTAL;
         }
     }
 
     public class Widget.VBox : Widget.Box {
-        public VBox () {
-            this.spacing = 6;
+        public VBox (int spacing = 6) {
+            this.spacing = spacing;
             this.orientation = Gtk.Orientation.VERTICAL;
         }
     }
