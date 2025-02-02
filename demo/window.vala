@@ -104,7 +104,6 @@ namespace Demo {
         }
     }
 
-
     public class Diceroller : View {
         private string res = "/io/github/pedromigueldev/vui/demo/";
         private Store<int> result = new Store<int> (1);
@@ -229,7 +228,7 @@ namespace Demo {
             view = new Navigation () {
                 pages = {
                     new ToolBar ("Journal") {
-                        show_headerbar_title = false,
+                        show_headerbar_title = true,
                         make_title = {
                             new Button.from_icon_name ("document-edit-symbolic") {
                                 shape = { Button.Shape.Circle },

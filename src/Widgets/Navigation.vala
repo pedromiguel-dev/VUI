@@ -49,7 +49,6 @@ namespace Vui {
                     foreach (Vui.Impl.View dest in item.destination) {
                         push_view (dest);
                         add_action (dest.title, (nav) => {
-                            message (@"pushing: $(dest.title)");
                             navigation_widget.push_by_tag (dest.title);
                         });
                     }
@@ -74,8 +73,6 @@ namespace Vui {
         private void push_view (Vui.Impl.View view) {
             var tmp = new Adw.NavigationPage.with_tag (view, view.title, view.title);
             navigation_widget.add (tmp);
-
-            message ("Added page: %s\n", tmp.tag);
         }
 
         public Navigation () {
