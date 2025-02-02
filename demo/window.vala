@@ -112,7 +112,7 @@ namespace Demo {
 
         construct {
             result.watch ((state) => {
-                switch (result.get ()) {
+                switch (state) {
                     case 1:
                         dice_res.set (res + "dice_1");
                         break;
@@ -136,8 +136,8 @@ namespace Demo {
 
             view = new ToolBar ("Dice roller") {
                 content = new VBox (10) {
-                    margin = { 0, 0, 20, 20 },
                     expand = {},
+                    margin = { 0, 0, 20, 20 },
                     align = { Gtk.Align.CENTER },
                     content = {
                         new Image (dice_res),

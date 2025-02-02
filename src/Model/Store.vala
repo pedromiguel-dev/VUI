@@ -18,10 +18,10 @@ namespace Vui.Model {
             state = new_state;
         }
 
-        public delegate void WtachSate<T> (T new_state);
+        public delegate void WtachSate<G> (G new_state);
 
-        public void watch (WtachSate callback) {
-            this.changed.connect (() => callback(this.get()));
+        public void watch (WtachSate<T> callback) {
+            this.changed.connect (() => callback (this.get ()));
         }
 
         public signal void changed (T state);
