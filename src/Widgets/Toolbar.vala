@@ -16,7 +16,7 @@ namespace Vui {
         public Impl.View top_bar {
             set {
                 this.destination = value.destination;
-                default_headerbar.unparent ();
+                toolbar_widget.remove (default_headerbar);
                 toolbar_widget.add_top_bar (value);
             }
         }
@@ -56,6 +56,10 @@ namespace Vui {
                     halign = Gtk.Align.END
                 });
             }
+        }
+
+        ~ToolBar () {
+            toolbar_widget.unparent ();
         }
 
         public ToolBar (string title) {

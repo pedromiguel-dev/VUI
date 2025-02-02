@@ -28,7 +28,7 @@ namespace Vui.Impl {
 
         internal void set_widget (Gtk.Widget widget) {
             this.widget_internal = widget;
-            widget.set_parent (this);
+            this.widget_internal.set_parent (this);
         }
 
         internal void set_wrapped_widget (Gtk.Widget widget) {
@@ -155,7 +155,9 @@ namespace Vui.Impl {
                 return widget_internal.css_classes;
             }
             set {
-                widget_internal.set_css_classes (value);
+                foreach (var class in value) {
+                    widget_internal.add_css_class (class);
+                }
             }
         }
 

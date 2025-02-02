@@ -18,6 +18,10 @@ namespace Vui {
             }
         }
 
+        ~HeaderBar () {
+            headerbar_widget.unparent ();
+        }
+
         public HeaderBar () {
             this.set_widget (this.headerbar_widget);
         }

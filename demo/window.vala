@@ -21,6 +21,7 @@
 using Vui.Widget;
 using Vui.Model;
 using Vui.Impl;
+using Vui.Flow;
 
 namespace Demo {
 
@@ -103,6 +104,54 @@ namespace Demo {
         }
     }
 
+
+    public class Diceroller : View {
+        private string res = "/io/github/pedromigueldev/vui/demo/";
+        private Store<int> result = new Store<int> (1);
+        private Store<string> dice_res = new Store<string> ("/io/github/pedromigueldev/vui/demo/" + "dice_1");
+
+        construct {
+            result.watch ((state) => {
+                switch (result.get ()) {
+                    case 1:
+                        dice_res.set (res + "dice_1");
+                        break;
+                    case 2:
+                        dice_res.set (res + "dice_2");
+                        break;
+                    case 3:
+                        dice_res.set (res + "dice_3");
+                        break;
+                    case 4:
+                        dice_res.set (res + "dice_4");
+                        break;
+                    case 5:
+                        dice_res.set (res + "dice_5");
+                        break;
+                    default:
+                        dice_res.set (res + "dice_6");
+                        break;
+                }
+            });
+
+            view = new ToolBar ("Dice roller") {
+                content = new VBox (10) {
+                    margin = { 0, 0, 20, 20 },
+                    expand = {},
+                    align = { Gtk.Align.CENTER },
+                    content = {
+                        new Image (dice_res),
+                        new Button.with_label ("Roll dice") {
+                            on_click = () => {
+                                result.set (GLib.Random.int_range (1, 7));
+                            }
+                        }
+                    }
+                }
+            };
+        }
+    }
+
     public class Overlay : View {
 
         private Store<int> spinrow = new Store<int> (0);
@@ -113,12 +162,12 @@ namespace Demo {
                     expand = { true },
                     align = { Gtk.Align.END },
                     margin_bottom = 20,
-                    css_classes = { "fill", "circular", "suggested-action", "filter-icon" },
+                    css_classes = { "suggested-action" },
+                    shape = { Button.Shape.Circle },
                     on_click = () => {
                         new Dialog () {
                             content_size = { 500, 500 },
                             content = new ToolBar ("Dialog") {
-                                top_bar = new HeaderBar (),
                                 content = new VBox () {
                                     valign = Gtk.Align.CENTER,
                                     content = {
@@ -157,17 +206,23 @@ namespace Demo {
                                 hexpand = true,
                                 trigger = new Button.with_label ("Account Screen"),
                             },
+                            new PageLink (new Diceroller ()) {
+                                valign = Gtk.Align.CENTER,
+                                hexpand = true,
+                                trigger = new Button.with_label ("Dice roller"),
+                            },
                             new PageLink (new StateScreen ()) {
                                 align = { Gtk.Align.CENTER, Gtk.Align.END },
                                 hexpand = true,
                                 trigger = new Label ("third screen"),
-                            }
+                            },
                         }
                     }
                 }
             };
         }
     }
+
 
     public class Home : View {
         construct {
@@ -177,10 +232,10 @@ namespace Demo {
                         show_headerbar_title = false,
                         make_title = {
                             new Button.from_icon_name ("document-edit-symbolic") {
-                                css_classes = { "circular" }
+                                shape = { Button.Shape.Circle },
                             },
                             new Button.from_icon_name ("view-more-horizontal-symbolic") {
-                                css_classes = { "circular" }
+                                shape = { Button.Shape.Circle },
                             }
                         },
                         content = new VBox () {

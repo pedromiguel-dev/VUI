@@ -17,10 +17,12 @@ namespace Vui {
             return combined_array;
         }
 
-        public Impl.View[] content {
+        public Gtk.Widget[] content {
             set {
-                foreach (Impl.View child in value) {
-                    this.destination = concatenate_arrays (this.destination, child.destination);
+                foreach (var child in value) {
+                    if (child is Impl.View)
+                        this.destination = concatenate_arrays (this.destination, ((Impl.View) child).destination);
+
                     this.set_child (child);
                 }
             }

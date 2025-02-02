@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <gresources>
   <gresource prefix="/io/github/pedromigueldev/vui/demo">
+    <file alias="dice_1">images/dice_1.svg</file>
+    <file alias="dice_2">images/dice_2.svg</file>
+    <file alias="dice_3">images/dice_3.svg</file>
+    <file alias="dice_4">images/dice_4.svg</file>
+    <file alias="dice_5">images/dice_5.svg</file>
+    <file alias="dice_6">images/dice_6.svg</file>
   </gresource>
 </gresources>

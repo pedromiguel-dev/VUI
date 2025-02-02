@@ -12,6 +12,7 @@ sources = [
   'Widgets' / 'Dialog.vala',
   'Widgets' / 'Entry.vala',
   'Widgets' / 'HeaderBar.vala',
+  'Widgets' / 'Image.vala',
   'Widgets' / 'Label.vala',
   'Widgets' / 'MenuButton.vala',
   'Widgets' / 'Navigation.vala',

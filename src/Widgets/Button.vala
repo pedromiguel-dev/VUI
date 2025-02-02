@@ -3,6 +3,12 @@ namespace Vui {
 
     public class Widget.Button : Impl.View {
 
+        public enum Shape {
+            Circle,
+            Pill,
+            OSD,
+        }
+
         internal Gtk.Button button_widget;
 
         public delegate void on_click_callback ();
@@ -20,6 +26,24 @@ namespace Vui {
         internal Impl.View child {
             set {
                 button_widget.child = value;
+            }
+        }
+
+        public Shape[] shape {
+            set {
+                foreach (var type in value) {
+                    switch (type) {
+                    case Circle :
+                        this.button_widget.add_css_class ("circular");
+                        break;
+                    case Pill:
+                        this.button_widget.add_css_class ("pill");
+                        break;
+                    case OSD:
+                        this.button_widget.add_css_class ("osd");
+                        break;
+                    }
+                }
             }
         }
 

@@ -20,7 +20,6 @@ public class Vui.Widget.Dialog : Vui.Impl.View {
 
     public Impl.View content {
         set {
-            message ("dialog content properties");
             dialog_widget.set_child (value);
         }
     }

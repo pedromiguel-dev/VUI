@@ -10,6 +10,20 @@ namespace Vui.Model {
             }
         }
 
+        public new T get () {
+            return state;
+        }
+
+        public new void set (T new_state) {
+            state = new_state;
+        }
+
+        public delegate void WtachSate<T> (T new_state);
+
+        public void watch (WtachSate callback) {
+            this.changed.connect (() => callback(this.get()));
+        }
+
         public signal void changed (T state);
 
         public Store (T initial_state) {
