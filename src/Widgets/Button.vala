@@ -11,24 +11,37 @@ namespace Vui {
 
         internal Gtk.Button button_widget;
 
-        public delegate void on_click_callback ();
-
         public void set_icon_name (string icon_name) {
             this.button_widget.set_icon_name (icon_name);
         }
 
-        public unowned on_click_callback? on_click {
-            set {
+        public delegate void OnClick ();
+
+        /**
+         * Sets on_click callback function.
+         *
+         */
+        public OnClick? on_click {
+            owned set {
                 button_widget.clicked.connect (() => value ());
             }
         }
 
-        internal Impl.View child {
+        public Impl.View child {
             set {
                 button_widget.child = value;
             }
         }
 
+        /**
+         * Sets the button shape array.
+         *
+         * enum Shape {
+         *    Circle,
+         *    Pill,
+         *    OSD,
+         * }
+         */
         public Shape[] shape {
             set {
                 foreach (var type in value) {

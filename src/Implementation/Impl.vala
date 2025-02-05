@@ -11,6 +11,11 @@ namespace Vui.Impl {
             this.widget_internal = this;
         }
 
+
+        /**
+         * This is the main view property used to construct Vui objects.
+         *
+         */
         public View view {
             get {
                 return (View) this.widget_internal;
@@ -25,6 +30,10 @@ namespace Vui.Impl {
                 set_widget (value);
             }
         }
+
+        // internal void bind_widget_ (Gtk.Widget widget) {
+        // obja.bind_property ("property-c", objb, "property-c", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
+        // }
 
         internal void set_widget (Gtk.Widget widget) {
             this.widget_internal = widget;
@@ -55,6 +64,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Expand sets the vexpand and hexpand respectively.
+         *
+         */
         public bool[] expand {
             set {
                 if (value.length == 0) {
@@ -70,6 +83,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Margin sets the [margin_top, margin_bottom, margin_start, margin_end] in this order.
+         *
+         */
         public int[] margin {
             set {
                 if (value.length == 1) {
@@ -86,6 +103,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Align sets the valign and halign respectively.
+         *
+         */
         public Gtk.Align[] align {
             set {
                 if (value.length == 1) {
@@ -98,6 +119,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Whether to expand vertically.
+         *
+         */
         public new bool vexpand {
             get { return widget_internal.get_vexpand (); }
             set {
@@ -106,6 +131,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Whether to expand horizontally.
+         *
+         */
         public new bool hexpand {
             get { return widget_internal.get_hexpand (); }
             set {
@@ -114,6 +143,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * How to distribute vertical space if widget gets extra space.
+         *
+         */
         public new Gtk.Align valign {
             get { return widget_internal.valign; }
             set {
@@ -122,6 +155,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * How to distribute horizontal space if widget gets extra space.
+         *
+         */
         public new Gtk.Align halign {
             get { return widget_internal.halign; }
             set {
@@ -130,26 +167,46 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Margin on top side of widget.
+         *
+         */
         public new int margin_top {
             get { return widget_internal.margin_top; }
             set { widget_internal.margin_top = value; }
         }
 
+        /**
+         * Margin on left side of widget.
+         *
+         */
         public new int margin_start {
             get { return widget_internal.margin_start; }
             set { widget_internal.margin_start = value; }
         }
 
+        /**
+         * Margin on bottom side of widget.
+         *
+         */
         public new int margin_bottom {
             get { return widget_internal.margin_bottom; }
             set { widget_internal.margin_bottom = value; }
         }
 
+        /**
+         * Margin on right side of widget.
+         *
+         */
         public new int margin_end {
             get { return widget_internal.margin_end; }
             set { widget_internal.margin_end = value; }
         }
 
+        /**
+         * Adds classes to the current style classes of the widget.
+         *
+         */
         public new string[] css_classes {
             owned get {
                 return widget_internal.css_classes;
@@ -161,6 +218,10 @@ namespace Vui.Impl {
             }
         }
 
+        /**
+         * Whether this widget itself will accept the input focus.
+         *
+         */
         public new bool focusable {
             get {
                 return widget_internal.focusable;
