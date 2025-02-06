@@ -11,6 +11,11 @@ namespace Vui.Impl {
             this.widget_internal = this;
         }
 
+        public override void dispose () {
+            foreach (var child in children)
+                child.unparent ();
+            base.dispose ();
+        }
 
         /**
          * This is the main view property used to construct Vui objects.
@@ -30,10 +35,6 @@ namespace Vui.Impl {
                 set_widget (value);
             }
         }
-
-        // internal void bind_widget_ (Gtk.Widget widget) {
-        // obja.bind_property ("property-c", objb, "property-c", BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL);
-        // }
 
         internal void set_widget (Gtk.Widget widget) {
             this.widget_internal = widget;
@@ -66,6 +67,7 @@ namespace Vui.Impl {
 
         /**
          * Expand sets the vexpand and hexpand respectively.
+         *
          *
          */
         public bool[] expand {
@@ -126,8 +128,8 @@ namespace Vui.Impl {
         public new bool vexpand {
             get { return widget_internal.get_vexpand (); }
             set {
-                widget_internal.set_vexpand (value);
                 this.set_vexpand (value);
+                widget_internal.set_vexpand (value);
             }
         }
 
@@ -138,8 +140,8 @@ namespace Vui.Impl {
         public new bool hexpand {
             get { return widget_internal.get_hexpand (); }
             set {
-                widget_internal.set_hexpand (value);
                 this.set_hexpand (value);
+                widget_internal.set_hexpand (value);
             }
         }
 
@@ -162,7 +164,7 @@ namespace Vui.Impl {
         public new Gtk.Align halign {
             get { return widget_internal.halign; }
             set {
-                this.set_valign (value);
+                this.set_halign (value);
                 widget_internal.set_halign (value);
             }
         }

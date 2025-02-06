@@ -34,7 +34,7 @@ namespace Demo {
             view = new ToolBar ("Account") {
                 make_title = {},
                 show_headerbar_title = false,
-                content = new VBox () {
+                content = new VBox (0) {
                     margin = { 0, 0, 20, 20 },
                     content = {
                         new Section ("Personal Information") {
@@ -105,11 +105,12 @@ namespace Demo {
     }
 
     public class Diceroller : View {
-        private string res = "/io/github/pedromigueldev/vui/demo/";
-        private Store<int> result = new Store<int> (1);
-        private Store<string> dice_res = new Store<string> ("/io/github/pedromigueldev/vui/demo/" + "dice_1");
 
         construct {
+            string res = "/io/github/pedromigueldev/vui/demo/";
+            var result = new Store<int> (1);
+            var dice_res = new Store<string> (res + "dice_1");
+
             result.watch ((state) => {
                 switch (state) {
                     case 1:
@@ -242,7 +243,7 @@ namespace Demo {
                                 shape = { Button.Shape.Circle },
                             }
                         },
-                        content = new VBox () {
+                        content = new VBox (14) {
                             margin = { 0, 0, 20, 20 },
                             vexpand = true,
                             content = {

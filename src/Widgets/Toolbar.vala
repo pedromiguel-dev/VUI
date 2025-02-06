@@ -7,7 +7,6 @@ namespace Vui {
         private Adw.ToolbarView toolbar_widget = new Adw.ToolbarView ();
 
         private Widget.HBox title_page_box = new HBox () {
-            margin_bottom = 10,
             spacing = 10
         };
 
