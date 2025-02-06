@@ -52,12 +52,19 @@ namespace Vui {
 
         public void prepend (Gtk.Widget widget) {
             foreach (Gtk.Widget child in this.children) {
-                child.unparent ();
+                this.remove (child);
             }
             this.set_child (widget);
             foreach (Gtk.Widget child in this.children) {
                 if (child.get_parent () == null)
                     set_child (child);
+            }
+        }
+
+        public void remove (Gtk.Widget widget) {
+            foreach (Gtk.Widget child in this.children) {
+                if (child == widget)
+                    child.unparent ();
             }
         }
 
