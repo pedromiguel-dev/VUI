@@ -4,7 +4,6 @@ namespace Vui.Impl {
 
         internal Gee.ArrayList<Gtk.Widget> children = new Gee.ArrayList<Gtk.Widget> ();
         private Gtk.Widget widget_internal;
-        private View[] _destination = {};
 
         construct {
             this.set_layout_manager (new Gtk.BinLayout ());
@@ -26,10 +25,6 @@ namespace Vui.Impl {
                 return (View) this.widget_internal;
             }
             set {
-                this.set_halign (value.halign);
-                this.set_valign (value.valign);
-                this.set_hexpand (value.hexpand);
-                this.set_vexpand (value.vexpand);
                 this.destination = value.destination;
                 this.title = value.title;
                 set_widget (value);
@@ -38,6 +33,10 @@ namespace Vui.Impl {
 
         internal void set_widget (Gtk.Widget widget) {
             this.widget_internal = widget;
+            this.set_halign (this.widget_internal.halign);
+            this.set_valign (this.widget_internal.valign);
+            this.set_hexpand (this.widget_internal.hexpand);
+            this.set_vexpand (this.widget_internal.vexpand);
             this.widget_internal.set_parent (this);
         }
 
@@ -56,6 +55,7 @@ namespace Vui.Impl {
 
         public string title;
 
+        private View[] _destination = {};
         public View[] destination {
             get {
                 return _destination;

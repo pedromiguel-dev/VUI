@@ -7,13 +7,19 @@ namespace Vui {
                 this.image_widget.set_content_fit (value);
             }
         }
-        public class Image (Model.Store<string> resource_bind) {
+
+        public class Image (Vui.Model.Store<string> resource_bind) {
             this.image_widget = new Gtk.Picture.for_resource (resource_bind.get ());
             this.set_widget (image_widget);
 
             resource_bind.changed.connect ((val) => {
                 this.image_widget.set_resource (val);
             });
+        }
+
+        public class Image.static (string resource_string) {
+            this.image_widget = new Gtk.Picture.for_resource (resource_string);
+            this.set_widget (image_widget);
         }
     }
 }

@@ -134,15 +134,6 @@ namespace Demo {
                 }
             });
 
-            var button = new Button () {
-                align = { Gtk.Align.CENTER },
-                child = new Label ("Hey"),
-                shape = { Button.Shape.Pill },
-                on_click = () => {
-                    result.set (GLib.Random.int_range (1, 7));
-                },
-            };
-
             view = new ToolBar ("Dice roller") {
                 content = new VBox (10) {
                     expand = {},
@@ -150,7 +141,14 @@ namespace Demo {
                     align = { Gtk.Align.CENTER },
                     content = {
                         new Image (dice_res),
-                        button
+                        new Button () {
+                            align = { Gtk.Align.CENTER },
+                            child = new Label ("Hey"),
+                            shape = { Button.Shape.Pill },
+                            on_click = () => {
+                                result.set (GLib.Random.int_range (1, 7));
+                            },
+                        }
                     }
                 }
             };
