@@ -4,6 +4,7 @@ namespace Vui.Impl {
 
         internal Gee.ArrayList<Gtk.Widget> children = new Gee.ArrayList<Gtk.Widget> ();
         private Gtk.Widget widget_internal;
+        public bool can_change = false;
 
         construct {
             this.set_layout_manager (new Gtk.BinLayout ());
@@ -14,6 +15,31 @@ namespace Vui.Impl {
             foreach (var child in children)
                 child.unparent ();
             base.dispose ();
+        }
+
+        public Model.Store<T> State<T> (T value) {
+            var temp = new Model.Store<T> (value);
+
+            temp.changed.connect_after (() => render ());
+
+            return temp;
+        }
+
+        public void render () {
+            view = body ();
+        }
+
+        public delegate View BodyViewContent ();
+
+        private BodyViewContent _body;
+        public BodyViewContent? body {
+            get {
+                return _body;
+            }
+            owned set {
+                _body = value;
+                render ();
+            }
         }
 
         /**
@@ -32,6 +58,10 @@ namespace Vui.Impl {
         }
 
         internal void set_widget (Gtk.Widget widget) {
+
+            if (this.widget_internal != null && this.widget_internal != this)
+                this.widget_internal.unparent ();
+
             this.widget_internal = widget;
             this.set_halign (this.widget_internal.halign);
             this.set_valign (this.widget_internal.valign);

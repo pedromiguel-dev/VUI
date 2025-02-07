@@ -108,50 +108,70 @@ namespace Demo {
 
         construct {
             string res = "/io/github/pedromigueldev/vui/demo/";
-            var result = new Store<int> (1);
+            var result = State<int> (1);
             var dice_res = new Store<string> (res + "dice_1");
 
-            result.watch ((state) => {
-                switch (state) {
-                    case 1:
-                        dice_res.set (res + "dice_1");
-                        break;
-                    case 2:
-                        dice_res.set (res + "dice_2");
-                        break;
-                    case 3:
-                        dice_res.set (res + "dice_3");
-                        break;
-                    case 4:
-                        dice_res.set (res + "dice_4");
-                        break;
-                    case 5:
-                        dice_res.set (res + "dice_5");
-                        break;
-                    default:
-                        dice_res.set (res + "dice_6");
-                        break;
-                }
-            });
+            body = () => {
 
-            view = new ToolBar ("Dice roller") {
-                content = new VBox (10) {
-                    expand = {},
-                    margin = { 0, 0, 20, 20 },
-                    align = { Gtk.Align.CENTER },
-                    content = {
-                        new Image (dice_res),
-                        new Button () {
-                            align = { Gtk.Align.CENTER },
-                            child = new Label ("Hey"),
-                            shape = { Button.Shape.Pill },
-                            on_click = () => {
-                                result.set (GLib.Random.int_range (1, 7));
-                            },
-                        }
-                    }
+                switch (result.get ()) {
+                case 1:
+                    dice_res.set (res + "dice_1");
+                    break;
+                case 2:
+                    dice_res.set (res + "dice_2");
+                    break;
+                case 3:
+                    dice_res.set (res + "dice_3");
+                    break;
+                case 4:
+                    dice_res.set (res + "dice_4");
+                    break;
+                case 5:
+                    dice_res.set (res + "dice_5");
+                    break;
+                default:
+                    dice_res.set (res + "dice_6");
+                    break;
                 }
+
+                return new ToolBar ("Dice roller") {
+                           content = new VBox (10) {
+                               expand = {},
+                               margin = { 0, 0, 20, 20 },
+                               align = { Gtk.Align.CENTER },
+                               content = {
+                                   new Image (dice_res),
+                                   new Button () {
+                                       align = { Gtk.Align.CENTER },
+                                       child = new Label ("Hey"),
+                                       shape = { Button.Shape.Pill },
+                                       on_click = () => {
+                                           result.set (GLib.Random.int_range (1, 7));
+                                       },
+                                   }
+                               }
+                           }
+                };
             };
+
+            // view = new ToolBar ("Dice roller") {
+            // content = new VBox (10) {
+            // expand = {},
+            // margin = { 0, 0, 20, 20 },
+            // align = { Gtk.Align.CENTER },
+            // content = {
+            // new Image (dice_res),
+            // new Button () {
+            // align = { Gtk.Align.CENTER },
+            // child = new Label ("Hey"),
+            // shape = { Button.Shape.Pill },
+            // on_click = () => {
+            // result.set (GLib.Random.int_range (1, 7));
+            // },
+            // }
+            // }
+            // }
+            // };
         }
     }
 
